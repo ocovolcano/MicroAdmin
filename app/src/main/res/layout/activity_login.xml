@@ -28,7 +28,9 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:baselineAligned="false"
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -38,7 +40,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="Correo electrónico"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -52,7 +54,7 @@
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
+                    android:hint="Contraseña"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -70,6 +72,19 @@
                 android:layout_marginTop="16dp"
                 android:text="Iniciar sesión"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/link_registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:enabled="true"
+                android:linksClickable="true"
+                android:paddingLeft="130dp"
+                android:text="Registrarme"
+                android:textColorLink="@color/colorPrimaryDark"
+                android:textIsSelectable="true"
+                android:textSize="14sp" />
 
         </LinearLayout>
     </ScrollView>
