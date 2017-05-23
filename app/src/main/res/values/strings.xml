@@ -16,4 +16,13 @@
     <string name="contrase_a">Contraseña</string>
     <string name="app_name">MicroAdmin</string>
     <string name="nombre">Nombre</string>
+    <string name="agregar_producto">Agregar Producto</string>
+    <string name="codigo">Código</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="precio_por_unidad">Precio por unidad</string>
+    <string name="costo_manufactura_por_unidad">Costo manufactura por unidad</string>
+    <string name="crear_una_cuenta">Crear una cuenta</string>
+    <string name="iniciar_sesi_n">Iniciar Sesión</string>
+    <string name="title_activity_inventario">Inventario</string>
+    <string name="guardar">Guardar</string>
 </resources>
