@@ -16,8 +16,8 @@
     function ingresarProducto() {
     global $con, $codigo, $nombre, $preciounidad, $costomanufactura, $idproducto, $imagen, $uploadURL, $uploadPath;
 
-    $fileInfo = pathinfo($imagen);
-    $extension = $fileInfo['extension'];
+    //$fileInfo = pathinfo($imagen);
+    $extension = 'jpg';//$fileInfo['extension'];
     $fileURL = $uploadURL. getFileName() . '.' . $extension;
     $filePath = $uploadPath. getFileName() . '.' . $extension;
 
