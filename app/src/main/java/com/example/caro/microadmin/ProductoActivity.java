@@ -1,6 +1,7 @@
 package com.example.caro.microadmin;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,13 +20,30 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Hashtable;
+import java.util.Map;
+
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
@@ -40,6 +58,17 @@ public class ProductoActivity extends AppCompatActivity {
     private ImageView mSetimageView;
     private FloatingActionButton mbuttonImage;
     private RelativeLayout mRlView;
+    private Button btGuardar;
+    private EditText codigo;
+    private EditText nombre;
+    private EditText cantidad;
+    private EditText precioUnidad;
+    private EditText costoManufactura;
+    private int PICK_IMAGE_REQUEST = 1;
+    private String UPLOAD_URL ="http://microadmin.000webhostapp.com/AgregarProducto.php";
+    private Bitmap bitmap;
+    private String KEY_IMAGE = "imagen";
+
 
     private String mpath;
 
@@ -53,6 +82,13 @@ public class ProductoActivity extends AppCompatActivity {
         mSetimageView = (ImageView) findViewById(R.id.producto_placeholder);
         mbuttonImage =(FloatingActionButton) findViewById(R.id.bt_subir_imagen);
         mRlView = (RelativeLayout) findViewById(R.id.layout_img);
+        btGuardar = (Button) findViewById(R.id.bt_guardar);
+        codigo = (EditText) findViewById(R.id.tf_codigo);
+        nombre = (EditText) findViewById(R.id.tf_nombre);
+        cantidad = (EditText) findViewById(R.id.tf_cantifdad);
+        precioUnidad = (EditText) findViewById(R.id.tf_precio_unidad);
+        costoManufactura = (EditText) findViewById(R.id.tf_costo_manufactura);
+
         if(myRequestStoragePermission())
             mbuttonImage.setEnabled(true);
         else
@@ -63,6 +99,13 @@ public class ProductoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showOptions();
+            }
+        });
+
+        btGuardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadImage();
             }
         });
     }
@@ -159,8 +202,10 @@ public class ProductoActivity extends AppCompatActivity {
                     break;
                 case SELECT_PICTURE:
                     Uri path = data.getData();
+
                     mSetimageView.setImageURI(path);
-                    mSetimageView.setImageBitmap(reduceBitmap(this, path.toString(), 400,400));
+                    bitmap = reduceBitmap(this, path.toString(), 400,400);
+                    mSetimageView.setImageBitmap(bitmap);
 
                     break;
 
@@ -170,6 +215,7 @@ public class ProductoActivity extends AppCompatActivity {
 
     public static Bitmap reduceBitmap(Context contexto, String uri,
                                       int maxAncho, int maxAlto) {
+        System.out.println(uri);
         try {
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
@@ -239,6 +285,68 @@ public class ProductoActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mpath = savedInstanceState.getString("file_path");
+    }
+
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private void uploadImage(){
+        //Showing the progress dialog
+        final ProgressDialog loading = ProgressDialog.show(this,"Guardando...","Por favor espere...",false,false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        //Disimissing the progress dialog
+                        loading.dismiss();
+                        //Showing toast message of the response
+                        Toast.makeText(ProductoActivity.this, s , Toast.LENGTH_LONG).show();
+                        System.out.println(s);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        //Dismissing the progress dialog
+                        loading.dismiss();
+
+                        //Showing toast
+                        Toast.makeText(ProductoActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                //Converting Bitmap to String
+                String imagen = getStringImage(bitmap);
+
+                //Creating parameters
+                Map<String,String> params = new Hashtable<String, String>();
+
+                //Adding parameters
+                params.put("codigo", codigo.getText().toString().trim());
+                params.put("nombre", nombre.getText().toString().trim());
+                params.put("preciounidad", precioUnidad.getText().toString().trim());
+                params.put("costomanufactura", costoManufactura.getText().toString().trim());
+                params.put(KEY_IMAGE, imagen);
+                //params.put("name", )
+                params.put("cantidad", cantidad.getText().toString().trim());
+
+                //returning parameters
+                return params;
+            }
+        };
+
+        //Creating a Request Queue
+        RequestQueue requestQueue = Volley.newRequestQueue(ProductoActivity.this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
     }
 
 

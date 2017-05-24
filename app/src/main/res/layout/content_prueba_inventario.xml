@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.caro.microadmin.InventarioActivity"
-    tools:showIn="@layout/activity_inventario">
+    tools:context="com.example.caro.microadmin.PruebaInventarioActivity"
+    tools:showIn="@layout/activity_prueba_inventario">
 
 </android.support.constraint.ConstraintLayout>
