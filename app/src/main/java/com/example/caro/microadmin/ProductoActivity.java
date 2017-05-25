@@ -306,7 +306,11 @@ public class ProductoActivity extends AppCompatActivity {
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        Toast.makeText(ProductoActivity.this, s , Toast.LENGTH_LONG).show();
+                        if(!s.isEmpty()) {
+                            Toast.makeText(ProductoActivity.this, "Se ha guardado correctamente", Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(ProductoActivity.this, "Ha ocurrido un error al insertar", Toast.LENGTH_LONG).show();
+                        }
 
                     }
                 },
