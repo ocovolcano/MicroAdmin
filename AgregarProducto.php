@@ -20,7 +20,7 @@
     global $con, $codigo, $nombre, $preciounidad, $costomanufactura, $idproducto, $imagenCodificada;
     
     $decoded_string = base64_decode($imagenCodificada);
-    $path = 'img/'.$codigo.'JPEG';
+    $path = 'http://microadmin.000webhostapp.com/'.'img/'.$codigo.'JPEG';
     
     //Guarda imagen en el server
     $file = fopen($path, 'wb');
