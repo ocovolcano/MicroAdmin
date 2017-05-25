@@ -137,7 +137,7 @@ public class ProductoActivity extends AppCompatActivity {
                     if(focusView != null){
                         focusView.requestFocus();
                     }else{
-                        Toast.makeText(ProductoActivity.this,"Seleccione una imagen para el producto",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProductoActivity.this,"Seleccione una imagen para el producto ",Toast.LENGTH_SHORT).show();
                     }
 
                 }else {
