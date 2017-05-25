@@ -5,9 +5,9 @@
     $imagenCodificada = $_POST["imagenCodificada"];
     $codigo = $_POST["codigo"];
     $nombre = $_POST["nombre"];
-    $preciounidad = $_POST["preciounidad"];
-    $costomanufactura = $_POST["costomanufactura"];
-    $cantidad = $_POST["cantidad"];
+    $preciounidad = (double) $_POST["preciounidad"];
+    $costomanufactura = (double) $_POST["costomanufactura"];
+    $cantidad = (int) $_POST["cantidad"];
     
     $idproducto;
     $uploadPath = 'img/';
