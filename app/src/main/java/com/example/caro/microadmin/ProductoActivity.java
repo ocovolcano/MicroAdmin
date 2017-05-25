@@ -67,7 +67,7 @@ public class ProductoActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
     private String UPLOAD_URL ="http://microadmin.000webhostapp.com/AgregarProducto.php";
     private Bitmap bitmap;
-    private String KEY_IMAGE = "imagen";
+    private String KEY_IMAGE = "imagenCodificada";
 
 
     private String mpath;
@@ -84,7 +84,7 @@ public class ProductoActivity extends AppCompatActivity {
         mRlView = (RelativeLayout) findViewById(R.id.layout_img);
         btGuardar = (Button) findViewById(R.id.bt_guardar);
         codigo = (EditText) findViewById(R.id.tf_codigo);
-        nombre = (EditText) findViewById(R.id.tf_nombre);
+        nombre = (EditText) findViewById(R.id.tf_nombre_producto);
         cantidad = (EditText) findViewById(R.id.tf_cantifdad);
         precioUnidad = (EditText) findViewById(R.id.tf_precio_unidad);
         costoManufactura = (EditText) findViewById(R.id.tf_costo_manufactura);
@@ -307,7 +307,7 @@ public class ProductoActivity extends AppCompatActivity {
                         loading.dismiss();
                         //Showing toast message of the response
                         Toast.makeText(ProductoActivity.this, s , Toast.LENGTH_LONG).show();
-                        System.out.println(s);
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -324,18 +324,18 @@ public class ProductoActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 //Converting Bitmap to String
                 String imagen = getStringImage(bitmap);
-
                 //Creating parameters
                 Map<String,String> params = new Hashtable<String, String>();
 
-                //Adding parameters
-                params.put("codigo", codigo.getText().toString().trim());
-                params.put("nombre", nombre.getText().toString().trim());
-                params.put("preciounidad", precioUnidad.getText().toString().trim());
-                params.put("costomanufactura", costoManufactura.getText().toString().trim());
-                params.put(KEY_IMAGE, imagen);
-                //params.put("name", )
-                params.put("cantidad", cantidad.getText().toString().trim());
+
+
+                    //Adding parameters
+                    params.put("codigo", codigo.getText().toString().trim());
+                    params.put("nombre", nombre.getText().toString().trim());
+                    params.put("preciounidad", precioUnidad.getText().toString().trim());
+                    params.put("costomanufactura", costoManufactura.getText().toString().trim());
+                    params.put(KEY_IMAGE, imagen);
+                    params.put("cantidad", cantidad.getText().toString().trim());
 
                 //returning parameters
                 return params;
