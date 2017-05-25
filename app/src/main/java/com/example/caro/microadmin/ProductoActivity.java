@@ -311,7 +311,6 @@ public class ProductoActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(ProductoActivity.this, "Ha ocurrido un error al insertar", Toast.LENGTH_LONG).show();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
