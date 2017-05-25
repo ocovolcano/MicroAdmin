@@ -17,7 +17,8 @@
     global $con, $codigo, $nombre, $preciounidad, $costomanufactura, $idproducto, $imagenCodificada;
     
     $decoded_string = base64_decode($imagenCodificada);
-    $path = 'img/'.$codigo.'.JPEG';
+    $nuevo_nombre = time();  
+    $path = 'img/'.$nuevo_nombre.'.JPEG';
     
     //Guarda imagen en el server
     $file = fopen($path, 'wb');
