@@ -7,7 +7,6 @@
     $nombre = $_POST["nombre"];
     $preciounidad = $_POST["preciounidad"];
     $costomanufactura = $_POST["costomanufactura"];
-    $imagen = $_FILES["imagen"];
     $cantidad = $_POST["cantidad"];
     
     $idproducto;
