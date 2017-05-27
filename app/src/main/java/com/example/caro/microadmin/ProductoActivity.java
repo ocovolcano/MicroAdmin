@@ -343,8 +343,17 @@ public class ProductoActivity extends AppCompatActivity {
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        Toast.makeText(ProductoActivity.this, s , Toast.LENGTH_LONG).show();
-
+                        if(!s.isEmpty()) {
+                            Toast.makeText(ProductoActivity.this, "Se ha guardado correctamente", Toast.LENGTH_LONG).show();
+                            nombre.setText("");
+                            codigo.setText("");
+                            precioUnidad.setText("");
+                            costoManufactura.setText("");
+                            cantidad.setText("");
+                            mSetimageView.setImageResource(android.R.drawable.ic_menu_camera);
+                        }else{
+                            Toast.makeText(ProductoActivity.this, "No se ha podido guardar correctamente", Toast.LENGTH_LONG).show();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
