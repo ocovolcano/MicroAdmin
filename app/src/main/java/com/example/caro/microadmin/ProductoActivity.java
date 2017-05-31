@@ -13,9 +13,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.annotation.NonNull;
@@ -23,7 +20,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -109,10 +106,45 @@ public class ProductoActivity extends AppCompatActivity {
         btGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean cancel = false;
+                View focusView = null;
+                if(bitmap == null){
+                    cancel = true;
+                }
+                if (TextUtils.isEmpty(codigo.getText().toString().trim()) ){
+                    codigo.setError("Este campo es requerido");
+                    focusView = codigo;
+                    cancel = true;
+                } if(TextUtils.isEmpty(nombre.getText().toString().trim())) {
+                    nombre.setError("Este campo es requerido");
+                    focusView = nombre;
+                    cancel = true;
+                } if(TextUtils.isEmpty(precioUnidad.getText().toString().trim())) {
+                    precioUnidad.setError("Este campo es requerido");
+                    focusView = precioUnidad;
+                    cancel = true;
+                } if(TextUtils.isEmpty(costoManufactura.getText().toString().trim())) {
+                    costoManufactura.setError("Este campo es requerido");
+                    focusView = costoManufactura;
+                    cancel = true;
+                } if(TextUtils.isEmpty(cantidad.getText().toString().trim())) {
+                    cantidad.setError("Este campo es requerido");
+                    focusView = cantidad;
+                    cancel = true;
+                } if (cancel) {
+                    // There was an error; don't attempt login and focus the first
+                    // form field with an error.
+                    if(focusView != null){
+                        focusView.requestFocus();
+                    }else{
+                        Toast.makeText(ProductoActivity.this,"Seleccione una imagen para el producto ",Toast.LENGTH_SHORT).show();
+                    }
+
+                }else {
                 uploadImage();
+                }
             }
         });
-
     }
 
     private void showOptions() {
@@ -202,8 +234,8 @@ public class ProductoActivity extends AppCompatActivity {
                     //Bitmap bitmap = BitmapFactory.decodeFile(mpath);
                     BitmapFactory.Options opts = new BitmapFactory.Options ();
                     opts.inSampleSize = 2;   // for 1/2 the image to be loaded
-                    Bitmap thumb = Bitmap.createScaledBitmap (BitmapFactory.decodeFile(mpath, opts), 400, 400, false);
-                    mSetimageView.setImageBitmap(thumb);
+                     bitmap = Bitmap.createScaledBitmap (BitmapFactory.decodeFile(mpath, opts), 400, 400, false);
+                    mSetimageView.setImageBitmap(bitmap);
                     break;
                 case SELECT_PICTURE:
                     Uri path = data.getData();
@@ -310,7 +342,8 @@ public class ProductoActivity extends AppCompatActivity {
                     public void onResponse(String s) {
                         //Disimissing the progress dialog
                         loading.dismiss();
-                        //Showing toast message of the respons
+                        //Showing toast message of the response
+                        if(!s.isEmpty()) {
                             Toast.makeText(ProductoActivity.this, "Se ha guardado correctamente", Toast.LENGTH_LONG).show();
                             nombre.setText("");
                             codigo.setText("");
@@ -318,6 +351,9 @@ public class ProductoActivity extends AppCompatActivity {
                             costoManufactura.setText("");
                             cantidad.setText("");
                             mSetimageView.setImageResource(android.R.drawable.ic_menu_camera);
+                        }else{
+                            Toast.makeText(ProductoActivity.this, "No se ha podido guardar correctamente", Toast.LENGTH_LONG).show();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -325,18 +361,18 @@ public class ProductoActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError volleyError) {
                         //Dismissing the progress dialog
                         loading.dismiss();
-                        System.out.println(volleyError.getMessage().toString());
+
                         //Showing toast
-                        Toast.makeText(ProductoActivity.this, "Ha ocurrido un error al insertar", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProductoActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 //Converting Bitmap to String
-                String imagen = getStringImage(bitmap);
-                //Creating parameters
-                Map<String,String> params = new Hashtable<String, String>();
 
+                    String imagen = getStringImage(bitmap);
+                    //Creating parameters
+                    Map<String, String> params = new Hashtable<String, String>();
 
 
                     //Adding parameters
@@ -346,10 +382,13 @@ public class ProductoActivity extends AppCompatActivity {
                     params.put("costomanufactura", costoManufactura.getText().toString().trim());
                     params.put(KEY_IMAGE, imagen);
                     params.put("cantidad", cantidad.getText().toString().trim());
+                    return params;
+                }
 
-                //returning parameters
-                return params;
-            }
+                    //returning parameters
+
+
+
         };
 
         //Creating a Request Queue
