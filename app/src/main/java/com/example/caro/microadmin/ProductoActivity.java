@@ -13,6 +13,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.annotation.NonNull;
@@ -20,6 +23,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -108,6 +112,7 @@ public class ProductoActivity extends AppCompatActivity {
                 uploadImage();
             }
         });
+
     }
 
     private void showOptions() {
@@ -305,12 +310,14 @@ public class ProductoActivity extends AppCompatActivity {
                     public void onResponse(String s) {
                         //Disimissing the progress dialog
                         loading.dismiss();
-                        //Showing toast message of the response
-                        if(!s.isEmpty()) {
+                        //Showing toast message of the respons
                             Toast.makeText(ProductoActivity.this, "Se ha guardado correctamente", Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(ProductoActivity.this, "Ha ocurrido un error al insertar", Toast.LENGTH_LONG).show();
-                        }
+                            nombre.setText("");
+                            codigo.setText("");
+                            precioUnidad.setText("");
+                            costoManufactura.setText("");
+                            cantidad.setText("");
+                            mSetimageView.setImageResource(android.R.drawable.ic_menu_camera);
                     }
                 },
                 new Response.ErrorListener() {
@@ -318,9 +325,9 @@ public class ProductoActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError volleyError) {
                         //Dismissing the progress dialog
                         loading.dismiss();
-
+                        System.out.println(volleyError.getMessage().toString());
                         //Showing toast
-                        Toast.makeText(ProductoActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProductoActivity.this, "Ha ocurrido un error al insertar", Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override

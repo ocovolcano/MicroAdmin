@@ -31,9 +31,9 @@
         <activity android:name=".RegistroActivity" />
         <activity android:name=".ProductoActivity" />
         <activity
-            android:name=".PruebaInventarioActivity"
-            android:label="@string/title_activity_prueba_inventario"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".MainInventarioActivity"
+            android:label="@string/title_activity_main_inventario"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

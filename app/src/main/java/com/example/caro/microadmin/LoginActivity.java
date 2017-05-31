@@ -214,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         if(existe){
                             String nombre = jsonResponse.getString("nombre");
                             showProgress(true);
-                            Intent intent = new Intent(getApplicationContext(), PruebaInventarioActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainInventarioActivity.class);
                             intent.putExtra("nombre", nombre);
                             LoginActivity.this.startActivity(intent);
 
