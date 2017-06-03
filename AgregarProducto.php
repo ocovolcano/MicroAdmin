@@ -9,6 +9,7 @@
     $costomanufactura = (double) $_POST["costomanufactura"];
     $cantidad = (int) $_POST["cantidad"];
     
+    
     $idproducto;
     $uploadPath = 'img/';
     //$serverIP = gethostbyname(gethostname());
@@ -27,7 +28,7 @@
     
     fclose($file);
     try{
-        $statement = mysqli_prepare($con, "INSERT INTO Producto (Codigo, Nombre, PrecioUnidad, CostoManufacturaUnidad, URLImagen, IDUsuario) VALUES (?, ?, ?, ?, ?)");
+        $statement = mysqli_prepare($con, "INSERT INTO Producto (Codigo, Nombre, PrecioUnidad, CostoManufacturaUnidad, URLImagen, IDUsuario) VALUES (?, ?, ?, ?, ?, ?)");
         mysqli_stmt_bind_param($statement,'ssdds', $codigo, $nombre, $preciounidad, $costomanufactura, $path, $idUsuario);
         $result = mysqli_stmt_execute($statement);
         if ($result === TRUE) {
