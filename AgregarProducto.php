@@ -2,6 +2,7 @@
     header('Content-type: bitmap; charset=utf-8 ');
     $con = mysqli_connect("localhost", "id1453347_microadmin", "microadmin17", "id1453347_microadmin");
     $imagenCodificada = $_POST["imagenCodificada"];
+    $idUsuario = $_POST["idUsuario"];
     $codigo = $_POST["codigo"];
     $nombre = $_POST["nombre"];
     $preciounidad = (double) $_POST["preciounidad"];
@@ -14,7 +15,7 @@
     $uploadURL = 'http://microadmin.000webhostapp.com/'.$uploadPath;
     //agregar lo del url a imagen
     function ingresarProducto() {
-    global $con, $codigo, $nombre, $preciounidad, $costomanufactura, $idproducto, $imagenCodificada;
+    global $con, $codigo, $nombre, $preciounidad, $costomanufactura, $idproducto, $imagenCodificada, $idUsuario;
     
     $decoded_string = base64_decode($imagenCodificada);
     $path = 'img/'.time().'.JPEG';
@@ -26,8 +27,8 @@
     
     fclose($file);
     try{
-        $statement = mysqli_prepare($con, "INSERT INTO Producto (Codigo, Nombre, PrecioUnidad, CostoManufacturaUnidad, URLImagen) VALUES (?, ?, ?, ?, ?)");
-        mysqli_stmt_bind_param($statement,'ssdds', $codigo, $nombre, $preciounidad, $costomanufactura, $path);
+        $statement = mysqli_prepare($con, "INSERT INTO Producto (Codigo, Nombre, PrecioUnidad, CostoManufacturaUnidad, URLImagen, IDUsuario) VALUES (?, ?, ?, ?, ?)");
+        mysqli_stmt_bind_param($statement,'ssdds', $codigo, $nombre, $preciounidad, $costomanufactura, $path, $idUsuario);
         $result = mysqli_stmt_execute($statement);
         if ($result === TRUE) {
             $idproducto = mysqli_insert_id($con);
