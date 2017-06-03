@@ -16,6 +16,7 @@
     
     while(mysqli_stmt_fetch($statement)){
         $response["success"] = true;  
+        $response["IDUsuario"] = $IDUsuario;
         $response["Nombre"] = $Nombre;
         $response["Correo"] = $Correo;
         $response["Contrasena"] = $Contrasena;
