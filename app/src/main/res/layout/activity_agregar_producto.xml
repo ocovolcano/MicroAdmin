@@ -7,6 +7,7 @@
     android:background="@android:color/background_light"
     tools:context="com.example.caro.microadmin.ProductoActivity">
 
+
     <ScrollView
         android:layout_width="368dp"
         android:layout_height="587dp"
@@ -40,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="84dp"
                     app:srcCompat="@android:drawable/ic_menu_camera"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription,VectorDrawableCompat" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/bt_subir_imagen"
@@ -50,7 +51,7 @@
                     android:clickable="true"
                     app:fabSize="mini"
                     app:srcCompat="@android:drawable/ic_menu_gallery"
-                    tools:ignore="RtlHardcoded" />
+                    tools:ignore="RtlHardcoded,VectorDrawableCompat" />
             </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -70,7 +71,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/tf_nombre_producto"
+                    android:id="@+id/tv_nombre_producto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/nombre" />
@@ -96,7 +97,8 @@
                     android:id="@+id/tf_precio_unidad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/precio_por_unidad" />
+                    android:hint="@string/precio_por_unidad"
+                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -107,7 +109,8 @@
                     android:id="@+id/tf_costo_manufactura"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/costo_manufactura_por_unidad" />
+                    android:hint="@string/costo_manufactura_por_unidad"
+                    android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
