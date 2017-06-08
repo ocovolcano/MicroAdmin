@@ -18,7 +18,6 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
@@ -58,7 +57,7 @@ public class UIProductoTest {
         onView(withId(R.id.tf_codigo))
                 .perform(typeText(codigo), closeSoftKeyboard());
 
-        onView(withId(R.id.tf_nombre_producto))
+        onView(withId(R.id.tv_nombre_producto))
                 .perform(typeText(nombre), closeSoftKeyboard());
 
         onView(withId(R.id.tf_precio_unidad))
@@ -72,7 +71,7 @@ public class UIProductoTest {
 
         onView(withId(R.id.bt_guardar)).perform(click());
         onView(withId(R.id.tf_codigo)).check(matches(hasErrorText("Este campo es requerido")));
-        onView(withId(R.id.tf_nombre_producto)).check(matches(hasErrorText("Este campo es requerido")));
+        onView(withId(R.id.tv_nombre_producto)).check(matches(hasErrorText("Este campo es requerido")));
         onView(withId(R.id.tf_precio_unidad)).check(matches(hasErrorText("Este campo es requerido")));
         onView(withId(R.id.tf_costo_manufactura)).check(matches(hasErrorText("Este campo es requerido")));
         onView(withId(R.id.tf_cantifdad)).check(matches(hasErrorText("Este campo es requerido")));

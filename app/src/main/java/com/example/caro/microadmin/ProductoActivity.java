@@ -38,7 +38,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -85,7 +84,7 @@ public class ProductoActivity extends AppCompatActivity {
         mRlView = (RelativeLayout) findViewById(R.id.layout_img);
         btGuardar = (Button) findViewById(R.id.bt_guardar);
         codigo = (EditText) findViewById(R.id.tf_codigo);
-        nombre = (EditText) findViewById(R.id.tf_nombre_producto);
+        nombre = (EditText) findViewById(R.id.tv_nombre_producto);
         cantidad = (EditText) findViewById(R.id.tf_cantifdad);
         precioUnidad = (EditText) findViewById(R.id.tf_precio_unidad);
         costoManufactura = (EditText) findViewById(R.id.tf_costo_manufactura);
@@ -340,10 +339,11 @@ public class ProductoActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
+                        System.out.println(s);
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        if(!s.isEmpty()) {
+
                             Toast.makeText(ProductoActivity.this, "Se ha guardado correctamente", Toast.LENGTH_LONG).show();
                             nombre.setText("");
                             codigo.setText("");
@@ -351,9 +351,7 @@ public class ProductoActivity extends AppCompatActivity {
                             costoManufactura.setText("");
                             cantidad.setText("");
                             mSetimageView.setImageResource(android.R.drawable.ic_menu_camera);
-                        }else{
-                            Toast.makeText(ProductoActivity.this, "No se ha podido guardar correctamente", Toast.LENGTH_LONG).show();
-                        }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -363,7 +361,7 @@ public class ProductoActivity extends AppCompatActivity {
                         loading.dismiss();
 
                         //Showing toast
-                        Toast.makeText(ProductoActivity.this, volleyError.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProductoActivity.this, "Ha ocurrido un error", Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
@@ -374,7 +372,6 @@ public class ProductoActivity extends AppCompatActivity {
                     //Creating parameters
                     Map<String, String> params = new Hashtable<String, String>();
 
-
                     //Adding parameters
                     params.put("codigo", codigo.getText().toString().trim());
                     params.put("nombre", nombre.getText().toString().trim());
@@ -382,6 +379,7 @@ public class ProductoActivity extends AppCompatActivity {
                     params.put("costomanufactura", costoManufactura.getText().toString().trim());
                     params.put(KEY_IMAGE, imagen);
                     params.put("cantidad", cantidad.getText().toString().trim());
+                    params.put("IDUsuario", String.valueOf(getIntent().getIntExtra("IDUsuario", 0)));
                     return params;
                 }
 

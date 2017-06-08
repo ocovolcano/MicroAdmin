@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/card_view"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="3dp"
+        app:contentPadding="5dp"
+        android:foreground="?selectableItemBackground"
+        android:clickable="true"
+        >
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="13dp">
+
+            <ImageView
+                android:id="@+id/img_producto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="16dp"
+                android:contentDescription=""
+                app:srcCompat="@drawable/ic_menu_gallery"
+                 />
+
+            <TextView
+                android:id="@+id/tv_nombre_producto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/img_producto"
+                android:text="Nombre Producto"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tv_precio_unit_inventario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_nombre_producto"
+                android:layout_toRightOf="@id/img_producto"
+                android:text="Precio Unitario"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_cantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/img_producto"
+                android:layout_below="@+id/tv_precio_unit_inventario"
+                android:text="Cantidad"
+                android:textSize="15sp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>

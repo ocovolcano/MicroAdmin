@@ -71,7 +71,7 @@
                 android:layout_height="match_parent">
 
                 <EditText
-                    android:id="@+id/tf_nombre_producto"
+                    android:id="@+id/tv_nombre_producto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/nombre" />

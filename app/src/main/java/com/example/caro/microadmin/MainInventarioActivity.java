@@ -1,6 +1,7 @@
 package com.example.caro.microadmin;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -90,7 +91,11 @@ public class MainInventarioActivity extends AppCompatActivity
     private void displaySelectedScreen(int id) {
         android.support.v4.app.Fragment fragment = null;
         if (id == R.id.nav_inventario) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
             fragment = new Inventario();
+            fragment.setArguments(bundle);
+
         } else if (id == R.id.nav_ventas) {
             fragment = new Ventas();
         } else if (id == R.id.nav_recordatorios) {

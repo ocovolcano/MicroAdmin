@@ -204,18 +204,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView.requestFocus();
         } else {
             Response.Listener<String> responseListener = new Response.Listener<String>() {
+
                 @Override
                 public void onResponse(String response) {
                     System.out.println(response);
-                    try {
 
+                    try {
                         JSONObject jsonResponse = new JSONObject(response);
                         boolean existe = jsonResponse.getBoolean("success");
+                        System.out.println(existe);
                         if(existe){
-                            String nombre = jsonResponse.getString("nombre");
+                            String nombre = jsonResponse.getString("Nombre");
+                            int idUsuario = jsonResponse.getInt("IDUsuario");
+
                             showProgress(true);
                             Intent intent = new Intent(getApplicationContext(), MainInventarioActivity.class);
                             intent.putExtra("nombre", nombre);
+                            intent.putExtra("IDUsuario", idUsuario);
                             LoginActivity.this.startActivity(intent);
 
                         }else{
@@ -230,6 +235,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             LoginRequest loginRequest = new LoginRequest(email, password, responseListener);
             RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
             requestQueue.add(loginRequest);
+
 
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.

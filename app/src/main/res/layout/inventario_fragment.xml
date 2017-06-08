@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".MainInventarioActivity">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -16,20 +18,21 @@
         android:id="@+id/tf_buscar_inventario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:drawableLeft="@drawable/ic_search_black_24dp"
         android:drawablePadding="2dp"
-        android:hint="@string/buscar" />
+        android:hint="@string/buscar"
+        tools:ignore="RtlHardcoded" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
-        <ListView
-            android:id="@+id/lista_inventario"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_inventario"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+           />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -42,7 +45,7 @@
             app:srcCompat="@drawable/ic_add_white_48dp" />
     </android.support.design.widget.CoordinatorLayout>
 
-</LinearLayout>
+</RelativeLayout>
 
 
 
