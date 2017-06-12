@@ -1,10 +1,12 @@
 package com.example.caro.microadmin;
 
+import java.io.Serializable;
+
 /**
  * Created by Caro on 31/05/2017.
  */
 
-public class Producto {
+public class Producto implements Serializable{
     private int IDProducto;
     private String codigo;
     private String nombre;
