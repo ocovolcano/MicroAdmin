@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.StringLoader;
 import com.squareup.picasso.Picasso;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
@@ -36,10 +38,15 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.nombreProducto.setText((CharSequence) listaProductos.get(position).getNombre());
-        holder.precioUnitario.setText((int) listaProductos.get(position).getPrecioUnidad());
+        String nombre = listaProductos.get(position).getNombre();
+        String precioUnitario = String.valueOf(listaProductos.get(position).getPrecioUnidad());
+        String cantidad =  String.valueOf(listaProductos.get(position).getCantidad());
+        holder.nombreProducto.setText(nombre);
+        holder.idProducto = listaProductos.get(position).getIDProducto();
+        holder.cantidad.setText(cantidad);
+        holder.precioUnitario.setText(precioUnitario);
         Picasso.with(context).load(listaProductos.get(position).getURL()).into(holder.imagenProducto);
-        holder.cantidad.setText(listaProductos.get(position).getCantidad());
+
 
     }
 
@@ -48,19 +55,20 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
         return listaProductos.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView imagenProducto;
         public TextView nombreProducto;
         public TextView precioUnitario;
         public TextView cantidad;
+        public int idProducto;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            imagenProducto = (ImageView)itemView.findViewById(R.id.img_producto);
-            nombreProducto = (TextView)itemView.findViewById(R.id.tv_nombre_producto);
-            precioUnitario = (TextView)itemView.findViewById(R.id.tv_precio_unit_inventario);
-            cantidad = (TextView)itemView.findViewById(R.id.tv_cantidad);
+            imagenProducto = (ImageView) itemView.findViewById(R.id.img_producto);
+            nombreProducto = (TextView) itemView.findViewById(R.id.tv_nombre_producto);
+            precioUnitario = (TextView) itemView.findViewById(R.id.tv_precio_unit_inventario);
+            cantidad = (TextView) itemView.findViewById(R.id.tv_cantidad);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,5 +77,14 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
                 }
             });
         }
+
+
+        @Override
+        public void onClick(View v) {
+
+        }
     }
-}
+
+
+    }
+

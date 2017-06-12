@@ -1,6 +1,6 @@
 package com.example.caro.microadmin;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +12,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,16 +22,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Array;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
 
 /**
- * Created by Caro on 28/05/2017.
+ * Created by  on 28/05/2017.
  */
 
-public class Inventario extends android.support.v4.app.Fragment {
+public class Inventario extends Fragment {
 
     private FloatingActionButton fab;
     //private ListView listaInventario;
@@ -44,11 +40,16 @@ public class Inventario extends android.support.v4.app.Fragment {
     private ArrayList<Producto> listaProductos;
     //private InventarioAdapter adapter;
 
-
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ObtenerInventario();
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         return inflater.inflate(R.layout.inventario_fragment, container, false);
 
@@ -60,7 +61,6 @@ public class Inventario extends android.support.v4.app.Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Inventario");
 
-        ObtenerInventario();
         fab = (FloatingActionButton) getView().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
