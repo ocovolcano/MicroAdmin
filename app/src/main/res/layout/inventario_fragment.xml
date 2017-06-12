@@ -11,7 +11,9 @@
         android:layout_height="0dp"
         android:background="@android:color/transparent"
         android:focusable="true"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:id="@+id/linearLayout2"
+        android:orientation="horizontal">
     </LinearLayout>
 
     <EditText
@@ -25,14 +27,12 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_toRightOf="@+id/linearLayout2"
+        android:layout_toEndOf="@+id/linearLayout2"
+        android:layout_marginTop="28dp">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_inventario"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-           />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -43,6 +43,11 @@
             android:clickable="true"
             app:fabSize="normal"
             app:srcCompat="@drawable/ic_add_white_48dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_inventario"
+            android:layout_width="match_parent"
+            android:layout_height="500dp" />
     </android.support.design.widget.CoordinatorLayout>
 
 </RelativeLayout>
