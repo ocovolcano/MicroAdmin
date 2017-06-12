@@ -1,7 +1,7 @@
 	<?php
 			$con = mysqli_connect("localhost", "id1453347_microadmin", "microadmin17", "id1453347_microadmin");
 
-			$fecha = $_POST["fecha"];
+			$fecha = new DateTime( $_POST["fecha"]);
 			$jsonVentas = $_POST["listaVentas"];
 			$arrayVentas = json_decode( $jsonVentas, true );
 			$response = array();
