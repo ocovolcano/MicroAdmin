@@ -1,6 +1,6 @@
 package com.example.caro.microadmin;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,11 +18,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class MainInventarioActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView nombreHeader;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +54,7 @@ public class MainInventarioActivity extends AppCompatActivity
         nombreHeader.setText(getIntent().getStringExtra("nombre"));
 
         displaySelectedScreen(R.id.nav_inventario);
+
     }
 
     @Override
@@ -89,7 +99,7 @@ public class MainInventarioActivity extends AppCompatActivity
     }
 
     private void displaySelectedScreen(int id) {
-        android.support.v4.app.Fragment fragment = null;
+        Fragment fragment = null;
         if (id == R.id.nav_inventario) {
             Bundle bundle = new Bundle();
             bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
@@ -97,7 +107,10 @@ public class MainInventarioActivity extends AppCompatActivity
             fragment.setArguments(bundle);
 
         } else if (id == R.id.nav_ventas) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
             fragment = new Ventas();
+            fragment.setArguments(bundle);
         } else if (id == R.id.nav_recordatorios) {
 
         }
@@ -111,4 +124,5 @@ public class MainInventarioActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
+
 }

@@ -34,7 +34,8 @@
             android:name=".MainInventarioActivity"
             android:label="@string/title_activity_main_inventario"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MostrarProducto"></activity>
+        <activity android:name=".MostrarProducto" />
+        <activity android:name=".AgregarVenta"></activity>
     </application>
 
 </manifest>
