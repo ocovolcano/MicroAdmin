@@ -1,6 +1,8 @@
 package com.example.caro.microadmin;
 
 import android.annotation.TargetApi;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -68,6 +70,7 @@ public class ProductoActivity extends AppCompatActivity {
     private String UPLOAD_URL ="http://microadmin.000webhostapp.com/AgregarProducto.php";
     private Bitmap bitmap;
     private String KEY_IMAGE = "imagenCodificada";
+    private Intent intent;
 
 
     private String mpath;
@@ -335,8 +338,11 @@ public class ProductoActivity extends AppCompatActivity {
     private void uploadImage(){
         //Showing the progress dialog
         final ProgressDialog loading = ProgressDialog.show(this,"Guardando...","Por favor espere...",false,false);
+        intent = new Intent(this, MainInventarioActivity.class);
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL,
                 new Response.Listener<String>() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onResponse(String s) {
                         System.out.println(s);
@@ -351,6 +357,10 @@ public class ProductoActivity extends AppCompatActivity {
                             costoManufactura.setText("");
                             cantidad.setText("");
                             mSetimageView.setImageResource(android.R.drawable.ic_menu_camera);
+
+                            finish();
+                            startActivity(intent);
+
 
                     }
                 },

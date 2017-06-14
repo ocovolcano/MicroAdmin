@@ -106,13 +106,17 @@ public class MainInventarioActivity extends AppCompatActivity
             fragment = new Inventario();
             fragment.setArguments(bundle);
 
+
         } else if (id == R.id.nav_ventas) {
             Bundle bundle = new Bundle();
             bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
             fragment = new Ventas();
             fragment.setArguments(bundle);
         } else if (id == R.id.nav_recordatorios) {
-
+            Bundle bundle = new Bundle();
+            bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
+            fragment = new Encargo();
+            fragment.setArguments(bundle);
         }
 
         if(fragment != null){

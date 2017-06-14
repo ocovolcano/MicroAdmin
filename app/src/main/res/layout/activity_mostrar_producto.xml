@@ -20,37 +20,93 @@
                 android:id="@+id/imagenProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:srcCompat="@drawable/ic_menu_gallery" />
+
+            <TextView
+                android:id="@+id/labelcodigo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Código: "
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvCodigo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toLeftOf="@id/labelcodigo"
+                android:text="TextView"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/labelnombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Nombre:"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvNombreProducto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="5dp"
+                android:text="TextView"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/labelcantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Cantidad en Inventario:"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvCantidad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="5dp"
+                android:text="TextView"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/labelprecio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Precio Unitario:"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvPrecioUnitario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="5dp"
+                android:text="TextView"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/labelCosto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Costo de manufactura"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvCostoManufactura"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/botonEliminar"
