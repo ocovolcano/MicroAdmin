@@ -30,6 +30,7 @@ import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.message.BasicStatusLine;
+import org.json.JSONException;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -87,7 +88,7 @@ public class HurlStack implements HttpStack {
 
     @Override
     public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
-            throws IOException, AuthFailureError {
+            throws IOException, AuthFailureError, JSONException {
         String url = request.getUrl();
         HashMap<String, String> map = new HashMap<String, String>();
         map.putAll(request.getHeaders());
@@ -201,7 +202,7 @@ public class HurlStack implements HttpStack {
 
     @SuppressWarnings("deprecation")
     /* package */ static void setConnectionParametersForRequest(HttpURLConnection connection,
-            Request<?> request) throws IOException, AuthFailureError {
+            Request<?> request) throws IOException, AuthFailureError, JSONException {
         switch (request.getMethod()) {
             case Method.DEPRECATED_GET_OR_POST:
                 // This is the deprecated way that needs to be handled for backwards compatibility.
@@ -256,7 +257,7 @@ public class HurlStack implements HttpStack {
     }
 
     private static void addBodyIfExists(HttpURLConnection connection, Request<?> request)
-            throws IOException, AuthFailureError {
+            throws IOException, AuthFailureError, JSONException {
         byte[] body = request.getBody();
         if (body != null) {
             connection.setDoOutput(true);

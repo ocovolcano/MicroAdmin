@@ -24,6 +24,8 @@ import android.text.TextUtils;
 
 import com.android.volley.VolleyLog.MarkerLog;
 
+import org.json.JSONException;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collections;
@@ -337,7 +339,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * @deprecated Use {@link #getParams()} instead.
      */
     @Deprecated
-    protected Map<String, String> getPostParams() throws AuthFailureError {
+    protected Map<String, String> getPostParams() throws AuthFailureError, JSONException {
         return getParams();
     }
 
@@ -376,7 +378,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * @deprecated Use {@link #getBody()} instead.
      */
     @Deprecated
-    public byte[] getPostBody() throws AuthFailureError {
+    public byte[] getPostBody() throws AuthFailureError, JSONException {
         // Note: For compatibility with legacy clients of volley, this implementation must remain
         // here instead of simply calling the getBody() function because this function must
         // call getPostParams() and getPostParamsEncoding() since legacy clients would have
@@ -396,7 +398,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      *
      * @throws AuthFailureError in the event of auth failure
      */
-    protected Map<String, String> getParams() throws AuthFailureError {
+    protected Map<String, String> getParams() throws AuthFailureError, JSONException {
         return null;
     }
 
@@ -432,7 +434,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      *
      * @throws AuthFailureError in the event of auth failure
      */
-    public byte[] getBody() throws AuthFailureError {
+    public byte[] getBody() throws AuthFailureError, JSONException {
         Map<String, String> params = getParams();
         if (params != null && params.size() > 0) {
             return encodeParameters(params, getParamsEncoding());

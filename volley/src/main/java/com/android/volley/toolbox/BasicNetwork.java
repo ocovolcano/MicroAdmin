@@ -40,6 +40,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.impl.cookie.DateUtils;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -176,6 +177,8 @@ public class BasicNetwork implements Network {
                 } else {
                     attemptRetryOnException("network", request, new NetworkError());
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }

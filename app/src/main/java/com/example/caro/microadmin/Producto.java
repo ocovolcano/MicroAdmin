@@ -50,6 +50,8 @@ public class Producto implements Serializable{
         this.URL = URL;
     }
 
+    public void setCantidad(int cantidad){this.cantidad = cantidad;}
+
     public double getCostoManufactura() {
         return costoManufactura;
     }

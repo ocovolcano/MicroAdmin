@@ -76,7 +76,6 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
                 @Override
                 public void onClick(View v) {
                     int posicion = getAdapterPosition();
-                    Snackbar.make(v,"Se selecciono el producto con id "+idProducto,Snackbar.LENGTH_LONG).setAction("Action",null).show();
                     Intent intent = new Intent(context,MostrarProducto.class);
                     intent.putExtra("Producto",listaProductos.get(posicion));
                     context.startActivity(intent);

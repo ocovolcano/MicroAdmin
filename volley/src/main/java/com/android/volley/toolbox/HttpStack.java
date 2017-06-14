@@ -20,6 +20,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Map;
@@ -40,6 +41,6 @@ public interface HttpStack {
      * @return the HTTP response
      */
     HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
-        throws IOException, AuthFailureError;
+            throws IOException, AuthFailureError, JSONException;
 
 }
