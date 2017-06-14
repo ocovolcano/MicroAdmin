@@ -70,6 +70,7 @@ public class AgregarVenta extends AppCompatActivity {
         tvTotal = (TextView) findViewById(R.id.tvTotal);
         tvCantidad = (EditText) findViewById(R.id.etCantidad);
         btnGuardar = (Button) findViewById(R.id.btnGuardarVenta);
+        btnGuardar.setEnabled(false);
         btnOnClick();
         btnGuardarOnClick();
         tvCantidad.addTextChangedListener(
@@ -163,6 +164,7 @@ public class AgregarVenta extends AppCompatActivity {
                 for (Producto prod:listaProductos
                         ) {
                     if(prod.getNombre().equals(producto)){
+                        btnGuardar.setEnabled(true);
                         cantidad = prod.getCantidad()- Integer.parseInt(tvCantidad.getText().toString());
                         prod.setCantidad(cantidad);
                         hashMap.put("idProducto",String.valueOf(prod.getIDProducto()));
