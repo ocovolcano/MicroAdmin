@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_inventario"
             android:icon="@drawable/ic_assignment_black_48dp"
@@ -14,6 +16,11 @@
             android:id="@+id/nav_recordatorios"
             android:icon="@drawable/ic_alarm_black_48dp"
             android:title="@string/recordatorios" />
+        <item
+            android:id="@+id/nav_clientes"
+            android:icon="@drawable/ic_assignment_ind_black_24dp"
+            android:title="@string/clientes" />
+
     </group>
 
 

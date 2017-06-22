@@ -2,6 +2,7 @@
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -38,12 +39,30 @@
             android:textSize="25sp" />
 
         <TextView
-            android:id="@+id/tv_precio_unit_inventario"
+            android:id="@+id/label_precio_unitario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_nombre_producto"
             android:layout_toRightOf="@id/img_producto"
-            android:text="Precio Unitario"
+            android:text="@string/precio_unitario_label"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_precio_unit_inventario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_nombre_producto"
+            android:layout_toRightOf="@id/label_precio_unitario"
+            android:text="@string/precio_unitario"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/label_cantidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_precio_unit_inventario"
+            android:layout_toRightOf="@id/img_producto"
+            android:text="Cantidad:"
             android:textSize="15sp" />
 
         <TextView
@@ -51,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_precio_unit_inventario"
-            android:layout_toRightOf="@id/img_producto"
+            android:layout_toRightOf="@id/label_cantidad"
             android:text="Cantidad"
             android:textSize="15sp" />
 

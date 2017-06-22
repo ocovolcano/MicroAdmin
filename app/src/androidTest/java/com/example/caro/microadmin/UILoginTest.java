@@ -1,15 +1,21 @@
 package com.example.caro.microadmin;
 
+import android.content.ClipData;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import android.support.test.rule.ActivityTestRule;
+import android.view.Gravity;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -17,6 +23,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.AllOf.allOf;
 
 /**
@@ -27,6 +34,8 @@ import static org.hamcrest.core.AllOf.allOf;
 public class UILoginTest {
     private String usuario;
     private String contrasena;
+    private String producto;
+    private String cantidad;
 
     @Rule
     public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule<>(
@@ -37,6 +46,8 @@ public class UILoginTest {
         // Specify a valid string.
         usuario = "carooco30@gmail.com";
         contrasena = "Carolina";
+        producto="Luz";
+        cantidad="1";
 
     }
 
@@ -98,6 +109,10 @@ public class UILoginTest {
 
 
     }
+
+
+
+
 
 
 

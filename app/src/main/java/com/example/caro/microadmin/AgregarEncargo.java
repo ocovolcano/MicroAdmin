@@ -9,5 +9,6 @@ public class AgregarEncargo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_encargo);
+        this.setTitle("Nuevo Encargo");
     }
 }

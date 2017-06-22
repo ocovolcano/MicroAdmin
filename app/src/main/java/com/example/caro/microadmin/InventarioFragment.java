@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * Created by  on 28/05/2017.
  */
 
-public class Inventario extends Fragment {
+public class InventarioFragment extends Fragment {
 
     private FloatingActionButton fab;
     //private ListView listaInventario;
@@ -40,6 +40,7 @@ public class Inventario extends Fragment {
     private ArrayList<Producto> listaProductos;
     //private InventarioAdapter adapter;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +50,6 @@ public class Inventario extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         return inflater.inflate(R.layout.inventario_fragment, container, false);
 
 
@@ -99,7 +98,7 @@ public class Inventario extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //adapter.getFilter().filter(s);
+
             }
 
             @Override

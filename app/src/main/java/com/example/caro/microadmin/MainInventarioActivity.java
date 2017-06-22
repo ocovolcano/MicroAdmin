@@ -1,11 +1,7 @@
 package com.example.caro.microadmin;
 
 import android.support.v4.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -17,16 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class MainInventarioActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -103,7 +89,7 @@ public class MainInventarioActivity extends AppCompatActivity
         if (id == R.id.nav_inventario) {
             Bundle bundle = new Bundle();
             bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
-            fragment = new Inventario();
+            fragment = new InventarioFragment();
             fragment.setArguments(bundle);
 
 
@@ -115,9 +101,14 @@ public class MainInventarioActivity extends AppCompatActivity
         } else if (id == R.id.nav_recordatorios) {
             Bundle bundle = new Bundle();
             bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
-            fragment = new Encargo();
+            fragment = new EncargoFragment();
             fragment.setArguments(bundle);
-        }
+        }else if (id == R.id.nav_clientes) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
+        fragment = new ClienteFragment();
+        fragment.setArguments(bundle);
+    }
 
         if(fragment != null){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

@@ -1,17 +1,19 @@
 package com.example.caro.microadmin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.StringLoader;
 import com.squareup.picasso.Picasso;
 
 import java.nio.charset.Charset;
@@ -21,13 +23,17 @@ import java.util.ArrayList;
  * Created by Caro on 31/05/2017.
  */
 
-public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.ViewHolder> {
+public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.ViewHolder>{
     private Context context;
-    private ArrayList<Producto> listaProductos;
+    private final ArrayList<Producto> listaProductos;
+    private final ArrayList<Producto> filtradaListaProductos;
+
 
     public InventarioAdapter(Context context, ArrayList<Producto> listaProductos) {
         this.context = context;
         this.listaProductos = listaProductos;
+        this.filtradaListaProductos = new ArrayList<>();
+        filtradaListaProductos.addAll(this.listaProductos);
 
     }
 
@@ -56,6 +62,8 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
     public int getItemCount() {
         return listaProductos.size();
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -88,8 +96,12 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
         public void onClick(View v) {
 
         }
-    }
+
+    }//Fin clase ViewHolder
+
+}//fin clase adapter
 
 
-    }
+
+
 

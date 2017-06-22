@@ -126,4 +126,7 @@
     <string name="inventario">Inventario</string>
     <string name="ventas">Ventas</string>
     <string name="recordatorios">Encargos</string>
+    <string name="clientes">Clientes</string>
+    <string name="precio_unitario">Precio Unitario</string>
+    <string name="precio_unitario_label">Precio Unitario:</string>
 </resources>

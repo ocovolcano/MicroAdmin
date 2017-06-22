@@ -29,6 +29,7 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        this.setTitle("Crear una cuenta");
 
 
         linkIniciarSesion =(TextView) findViewById(R.id.link_iniciarSesion);

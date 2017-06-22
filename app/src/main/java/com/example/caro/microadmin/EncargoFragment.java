@@ -13,7 +13,7 @@ import android.view.ViewGroup;
  * Created by Caro on 13/06/2017.
  */
 
-public class Encargo extends Fragment{
+public class EncargoFragment extends Fragment{
 
     private FloatingActionButton fab;
     @Nullable

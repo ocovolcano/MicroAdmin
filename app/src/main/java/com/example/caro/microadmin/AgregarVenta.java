@@ -52,6 +52,7 @@ public class AgregarVenta extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_venta);
+        this.setTitle("Nueva Venta");
         cantidad = 0;
         listaProductos = (ArrayList<Producto>)getIntent().getSerializableExtra("arrayProductos");
 
