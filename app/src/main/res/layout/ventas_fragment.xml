@@ -10,12 +10,19 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabVentas"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
+            android:clickable="true"
             app:fabSize="normal"
             app:srcCompat="@drawable/ic_add_white_48dp" />
+
+        <ExpandableListView
+            android:id="@+id/listaVentaselv"
+            android:layout_width="match_parent"
+            android:layout_height="406dp"
+            android:layout_marginTop="60dp"/>
+
     </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

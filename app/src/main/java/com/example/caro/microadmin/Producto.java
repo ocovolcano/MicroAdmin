@@ -26,6 +26,13 @@ public class Producto implements Serializable{
         this.cantidad = cantidad;
     }
 
+    public Producto(int IDProducto,int cantidad,String nombre,double precioUnidad){
+        this.IDProducto =IDProducto;
+        this.cantidad = cantidad;
+        this.nombre = nombre;
+        this.precioUnidad = precioUnidad;
+    }
+
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
