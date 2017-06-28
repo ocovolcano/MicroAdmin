@@ -59,7 +59,7 @@ public class AgregarEncargo extends AppCompatActivity{
     private ArrayList<HashMap<String,String>> productosAgregados;
     private ListView listView;
     private ListViewAdapter adapter;
-    private int idCliente;
+    private int idCliente = -1;
     private  HashMap<Integer,Integer> hashPosicionesCliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,27 +116,12 @@ public class AgregarEncargo extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
                 idCliente = hashPosicionesCliente.get(listaAutoCompletarClientes.indexOf(parent.getItemAtPosition(position)));
 
             }
         });
 
-        autoCompletarClientes.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
 
         autoCompletarProductos = (AutoCompleteTextView) findViewById(R.id.autoComp_Producto);
@@ -228,18 +213,9 @@ public class AgregarEncargo extends AppCompatActivity{
         };
             //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        String nombre = autoCompletarClientes.getText().toString();
-        for (String nombreClient : listaAutoCompletarClientes){
-            if(nombre.equals(nombreClient)){
-                idCliente = hashPosicionesCliente.get(listaAutoCompletarClientes.indexOf(nombre));
-                System.out.println("IDCLIENTE " + idCliente);
-            }else{
-                idCliente = -1;
-            }
-        }
             if(validacionesCorrectas()) {
 
-                myCalendar.add(Calendar.DAY_OF_MONTH, 1);
+
                 AgregarEncargoRequest encargoRequest = new AgregarEncargoRequest(getIntent().getIntExtra("IDUsuario", 0), productosAgregados, myCalendar.getTime(), idCliente, responseListener);
                 RequestQueue requestQueue = Volley.newRequestQueue(AgregarEncargo.this);
                 requestQueue.add(encargoRequest);
@@ -380,7 +356,6 @@ public class AgregarEncargo extends AppCompatActivity{
     private void updateLabel() {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-        myCalendar.add(Calendar.DAY_OF_MONTH, -1);
         tfFecha.setText(sdf.format(myCalendar.getTime()));
     }
 
