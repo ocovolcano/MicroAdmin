@@ -1,10 +1,12 @@
 package com.example.caro.microadmin;
 
+import java.io.Serializable;
+
 /**
  * Created by Caro on 21/06/2017.
  */
 
-public class Cliente {
+public class Cliente implements Serializable{
 
     private int IDCliente;
     private String Nombre;
@@ -60,5 +62,13 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         Telefono = telefono;
+    }
+
+    public int getIDCliente() {
+        return IDCliente;
+    }
+
+    public void setIDCliente(int IDCliente) {
+        this.IDCliente = IDCliente;
     }
 }

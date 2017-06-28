@@ -41,7 +41,8 @@
             android:name=".AgregarVenta"
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".AgregarCliente" />
-        <activity android:name=".AgregarEncargo"></activity>
+        <activity android:name=".AgregarEncargo"
+            android:windowSoftInputMode="adjustNothing"></activity>
     </application>
 
 </manifest>

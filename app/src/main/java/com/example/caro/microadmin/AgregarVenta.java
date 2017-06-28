@@ -92,11 +92,11 @@ public class AgregarVenta extends AppCompatActivity {
                             int valorCantidad = Integer.parseInt(tvCantidad.getText().toString());
 
                             if (valorCantidad < 0) {
-                                Snackbar.make(getCurrentFocus(), "Debe ingresar una cantidad mayor a 0", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                Toast.makeText(getApplicationContext(), "Debe ingresar una cantidad mayor a 0", Toast.LENGTH_LONG).show();
                                 tvCantidad.setText("");
                                 fbAgregarProducto.hide();
                             } else if (valorCantidad > cantidad) {
-                                Snackbar.make(getCurrentFocus(), "Debe ingresar una cantidad menor a "+cantidad, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                Toast.makeText(getApplicationContext(), "Debe ingresar una cantidad menor a "+cantidad, Toast.LENGTH_LONG).show();
                                 tvCantidad.setText("");
                                 fbAgregarProducto.hide();
                             }else if(valorCantidad>0){
@@ -117,7 +117,7 @@ public class AgregarVenta extends AppCompatActivity {
                         ) {
                     if(prod.getNombre().equals(producto)){
                         cantidad = prod.getCantidad();
-                        Snackbar.make(getCurrentFocus(),"Cantidad disponible "+cantidad,Snackbar.LENGTH_LONG).setAction("Action",null).show();
+                        Toast.makeText(getApplicationContext(),"Cantidad disponible "+cantidad,Toast.LENGTH_LONG).show();
                         fbAgregarProducto.hide();
                         tvCantidad.setText("");
                     }
