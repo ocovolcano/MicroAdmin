@@ -48,16 +48,6 @@ public class Ventas extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
-        HashMap<String, ArrayList<String>> allChildItems = new HashMap<>();
-        ArrayList<String> venta= new ArrayList<>();
-        venta.add("Jabon");
-        venta.add("Shampoo");
-        venta.add("Arroz");
-        allChildItems.put("Venta",venta);
-
-
-
         return inflater.inflate(R.layout.ventas_fragment, container, false);
     }
 

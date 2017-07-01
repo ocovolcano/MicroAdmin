@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fechaVenta"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorButtonNormal"
+    android:layout_margin="20dp">
+
+
+    <TextView
+        android:id="@+id/nombreClienteEncargotv"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="49dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="0.04"
+        android:text="TextView"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/telefonoEncargotv"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/nombreClienteEncargotv"
+        android:layout_alignStart="@+id/nombreClienteEncargotv"
+        android:layout_below="@+id/nombreClienteEncargotv"
+        android:text="TextView"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/fechaEncargotv"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="TextView"
+        android:textSize="16dp"
+        android:layout_below="@+id/telefonoEncargotv"
+        android:layout_alignLeft="@+id/telefonoEncargotv"
+        android:layout_alignStart="@+id/telefonoEncargotv"
+        android:layout_alignRight="@+id/telefonoEncargotv"
+        android:layout_alignEnd="@+id/telefonoEncargotv" />
+
+</RelativeLayout>

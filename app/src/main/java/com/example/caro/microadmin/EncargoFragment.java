@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -20,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Caro on 13/06/2017.
@@ -29,6 +32,9 @@ public class EncargoFragment extends Fragment{
 
     private ArrayList<Cliente> listaClientes;
     private ArrayList<Producto> listaProductos;
+    private ArrayList<Encargo> listaEncargos;
+    private HashMap<String,ArrayList <String>> encabezado;
+    private ExpandableListView expandableListView;
 
     private FloatingActionButton fab;
     @Nullable
@@ -43,7 +49,7 @@ public class EncargoFragment extends Fragment{
         getActivity().setTitle("Encargos");
         obtenerClientes();
         obtenerInventario();
-
+        obtenerEncargado();
         fab = (FloatingActionButton) getView().findViewById(R.id.fabEncargos);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +61,8 @@ public class EncargoFragment extends Fragment{
                 startActivity(intent);
             }
         });
+
+        expandableListView = (ExpandableListView) getView().findViewById(R.id.listaEncargoselv);
     }
 
     private void obtenerClientes() {
@@ -128,5 +136,60 @@ public class EncargoFragment extends Fragment{
         InventarioRequest inventarioRequest = new InventarioRequest(responseListener,  getArguments().getInt("IDUsuario"));
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(inventarioRequest);
+    }
+
+    public void obtenerEncargado(){
+        listaEncargos = new ArrayList<>();
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+
+                    JSONArray jsonArray = new JSONArray(response);
+
+
+                    for (int i=0; i< jsonArray.length(); i++) {
+                        JSONObject jsonResponse = jsonArray.getJSONObject(i);
+
+                        int idEncargo = jsonResponse.getInt("idEncargo");
+                        String fecha = jsonResponse.getString("fecha");
+                        String nombre = jsonResponse.getString("nombreCliente")+" "+jsonResponse.getString("primerApellido")+" "+jsonResponse.getString("segundoApellido");
+                        String telefono = jsonResponse.getString("telefono");
+                        ArrayList<LineaEncargo> listaProductosEncargados = new ArrayList<>();
+                        JSONArray productos = jsonResponse.getJSONArray("productos");
+                        for (int j =  0 ; j<productos.length(); j++){
+                            JSONObject  producto = productos.getJSONObject(j);
+                            int cantidad = producto.getInt("cantidad");
+                            String nombreProducto = producto.getString("nombreProducto");
+                            LineaEncargo lineaVenta = new LineaEncargo(cantidad, nombreProducto);
+                            listaProductosEncargados.add(lineaVenta);
+                        }
+                        Encargo producto = new Encargo(idEncargo, fecha, nombre,listaProductosEncargados,telefono);
+                        listaEncargos.add(producto);
+                    }
+                    crearArrayEncabezado();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        EncargoRequest encargoRequest = new EncargoRequest(responseListener, getArguments().getInt("IDUsuario", 0));
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(encargoRequest);
+    }
+
+    private void crearArrayEncabezado(){
+        encabezado = new HashMap<>();
+        for(int i = 0 ; i<listaEncargos.size();i++){
+            ArrayList<String> item = new ArrayList<>();
+            item.add(listaEncargos.get(i).getFecha());
+            item.add( (listaEncargos.get(i).getNombreCliente()));
+            item.add(listaEncargos.get(i).getTelefono());
+            encabezado.put(Integer.toString(i),item);
+        }
+        ExpansibleListViewAdapterEncargos expandableListViewAdapter = new ExpansibleListViewAdapterEncargos(getContext(), listaEncargos,encabezado);
+
+        expandableListView.setAdapter(expandableListViewAdapter);
     }
 }

@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/numeroVentatv"
+        android:id="@+id/nombreClienteEncargotv"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_weight="0.04"
@@ -21,7 +21,7 @@
         android:layout_marginStart="44dp" />
 
     <TextView
-        android:id="@+id/fechaVentatv"
+        android:id="@+id/telefonoEncargotv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="46dp"
@@ -31,6 +31,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/numeroVentatv" />
+        android:layout_alignBottom="@+id/nombreClienteEncargotv" />
 
 </RelativeLayout>

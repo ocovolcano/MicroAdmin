@@ -19,5 +19,12 @@
             app:fabSize="normal"
             app:srcCompat="@drawable/ic_add_white_48dp" />
 
+        <ExpandableListView
+            android:id="@+id/listaEncargoselv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"/>
+
     </android.support.design.widget.CoordinatorLayout>
+
 </LinearLayout>
