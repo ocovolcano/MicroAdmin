@@ -6,97 +6,103 @@
     android:layout_height="match_parent"
     tools:context="com.example.caro.microadmin.AgregarEncargo">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_cliente"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <AutoCompleteTextView
-            android:id="@+id/autoComp_NombreCliente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_weight="1"
-            android:hint="Cliente"
-            android:paddingBottom="15dp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_fecha"
+    <RelativeLayout
+        android:id="@+id/formEncargo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/til_cliente">
+        android:background="@color/cardview_light_background"
+        android:padding="10dp">
 
-        <EditText
-            android:id="@+id/tf_fechaEncargo"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_cantidad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="Fecha"
-            android:inputType="date" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_below="@+id/til_producto">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_producto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/til_fecha">
+            <EditText
+                android:id="@+id/tf_cantidadEncargo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/fab_agregarProductoEncargo"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/fab_agregarProductoEncargo"
+                android:ems="10"
+                android:hint="Cantidad"
+                android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_cliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <AutoCompleteTextView
-            android:id="@+id/autoComp_Producto"
+            <AutoCompleteTextView
+                android:id="@+id/autoComp_NombreCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_weight="1"
+                android:hint="Cliente"
+                android:paddingBottom="15dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_producto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_weight="1"
-            android:hint="Producto" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_below="@+id/til_fecha">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/til_cantidad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/til_producto">
 
-        <EditText
-            android:id="@+id/tf_cantidadEncargo"
+            <AutoCompleteTextView
+                android:id="@+id/autoComp_Producto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:hint="Producto" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_fecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/fab_agregarProductoEncargo"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/fab_agregarProductoEncargo"
-            android:ems="10"
-            android:hint="Cantidad"
-            android:inputType="number" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_below="@+id/til_cliente">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_agregarProductoEncargo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/til_cantidad"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right"
-        android:layout_marginRight="8dp"
-        android:clickable="true"
-        app:fabSize="mini"
-        app:srcCompat="@drawable/ic_add_white_48dp" />
+            <EditText
+                android:id="@+id/tf_fechaEncargo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Fecha"
+                android:inputType="date" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_agregarProductoEncargo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/til_cantidad"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_done_white_24dp" />
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="276dp"
-        android:layout_alignEnd="@+id/til_cantidad"
-        android:layout_alignRight="@+id/til_cantidad"
-        android:layout_below="@+id/til_cantidad"
-        android:layout_marginLeft="5dp">
+        android:layout_below="@+id/formEncargo"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,7 +112,7 @@
             <ListView
                 android:id="@+id/listView_ProductosEncargo"
                 android:layout_width="match_parent"
-                android:layout_height="273dp" />
+                android:layout_height="234dp" />
         </LinearLayout>
     </ScrollView>
 
@@ -116,6 +122,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/guardar" />
+        android:layout_marginBottom="5dp"
+        android:background="#43cc70"
+        android:text="@string/guardar"
+        android:textColor="@color/mdtp_white" />
 
 </RelativeLayout>

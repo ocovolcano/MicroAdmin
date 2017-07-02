@@ -157,32 +157,40 @@ public class AgregarVenta extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                HashMap<String,String> hashMap = new HashMap<String, String>();
-                hashMap.put(FIRST_COLUMN,auto.getText().toString());
-                hashMap.put(SECOND_COLUMN,tvCantidad.getText().toString());
-                String producto = auto.getText().toString();
+                if(!auto.getText().toString().isEmpty()) {
 
-                for (Producto prod:listaProductos
-                        ) {
-                    if(prod.getNombre().equals(producto)){
-                        btnGuardar.setEnabled(true);
-                        cantidad = prod.getCantidad()- Integer.parseInt(tvCantidad.getText().toString());
-                        prod.setCantidad(cantidad);
-                        hashMap.put("idProducto",String.valueOf(prod.getIDProducto()));
-                        hashMap.put("cantidad",tvCantidad.getText().toString());
-                        productosAgregados.add(hashMap);
-                        total +=(Integer.parseInt(tvCantidad.getText().toString())*prod.getPrecioUnidad());
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put(FIRST_COLUMN, auto.getText().toString());
+                    hashMap.put(SECOND_COLUMN, tvCantidad.getText().toString());
+                    String producto = auto.getText().toString();
+
+                    for (Producto prod : listaProductos
+                            ) {
+                        if (prod.getNombre().equals(producto)) {
+                            btnGuardar.setEnabled(true);
+                            cantidad = prod.getCantidad() - Integer.parseInt(tvCantidad.getText().toString());
+                            prod.setCantidad(cantidad);
+                            hashMap.put("idProducto", String.valueOf(prod.getIDProducto()));
+                            hashMap.put("cantidad", tvCantidad.getText().toString());
+                            productosAgregados.add(hashMap);
+                            total += (Integer.parseInt(tvCantidad.getText().toString()) * prod.getPrecioUnidad());
+                        }
                     }
+                    auto.setText("");
+                    tvCantidad.setText("");
+                    tvTotal.setText(String.valueOf(total));
+                    fbAgregarProducto.hide();
+                    try {
+                        agregar.add(hashMap);
+                    } catch (Error e) {
+                    }
+                    adapter.notifyDataSetChanged();
+                }else{
+                    View focusView = null;
+                    auto.setError("Este campo es requerido");
+                    focusView = auto;
+
                 }
-                auto.setText("");
-                tvCantidad.setText("");
-                tvTotal.setText(String.valueOf(total));
-                fbAgregarProducto.hide();
-                try {
-                    agregar.add(hashMap);
-                }catch (Error e){
-                }
-                adapter.notifyDataSetChanged();
             }
         });
     }

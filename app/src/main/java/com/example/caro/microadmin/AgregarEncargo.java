@@ -61,6 +61,7 @@ public class AgregarEncargo extends AppCompatActivity{
     private ListViewAdapter adapter;
     private int idCliente = -1;
     private  HashMap<Integer,Integer> hashPosicionesCliente;
+    private Calendar myCalendar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,8 @@ public class AgregarEncargo extends AppCompatActivity{
         });
 
         fabAgregarProductoOnClick();
-
+        System.out.println(System.currentTimeMillis() - 1000);
+        myCalendar = Calendar.getInstance();
         tfFecha = (EditText) findViewById(R.id.tf_fechaEncargo);
         tfFecha.setOnClickListener(new View.OnClickListener() {
 
@@ -103,6 +105,7 @@ public class AgregarEncargo extends AppCompatActivity{
                 DatePickerDialog picker = new DatePickerDialog(AgregarEncargo.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH));
+
                 picker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 picker.show();
             }
@@ -187,7 +190,7 @@ public class AgregarEncargo extends AppCompatActivity{
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private void guardarEncargo() {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
 
@@ -334,7 +337,7 @@ public class AgregarEncargo extends AppCompatActivity{
         }
     }
 
-    Calendar myCalendar = Calendar.getInstance();
+
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -346,17 +349,17 @@ public class AgregarEncargo extends AppCompatActivity{
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
+            System.out.println("DIA " + dayOfMonth);
+
+            updateLabel(myCalendar.getTime());
         }
 
     };
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void updateLabel() {
+    private void updateLabel(Date fecha) {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-        tfFecha.setText(sdf.format(myCalendar.getTime()));
+        tfFecha.setText(DateFormat.format(myFormat, fecha));
     }
 
 

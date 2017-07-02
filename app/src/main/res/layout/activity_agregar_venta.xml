@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
+    android:background="@color/cardview_light_background"
     tools:context="com.example.caro.microadmin.AgregarVenta">
 
     <android.support.design.widget.TextInputLayout
@@ -27,7 +28,8 @@
         android:id="@+id/til_cantidadprod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/til_agProducto">
+        android:layout_below="@+id/til_agProducto"
+        android:layout_marginBottom="15dp">
 
         <EditText
             android:id="@+id/etCantidad"
@@ -55,7 +57,7 @@
         android:layout_marginRight="8dp"
         android:clickable="true"
         app:fabSize="mini"
-        app:srcCompat="@drawable/ic_add_white_48dp" />
+        app:srcCompat="@drawable/ic_done_white_24dp" />
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -63,7 +65,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:background="@color/cardview_light_background"
+        android:elevation="0dp">
 
         <LinearLayout
             android:id="@+id/linearLayout3"
@@ -71,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="12dp"
+            android:background="@color/cardview_light_background"
             android:orientation="vertical">
 
             <ListView
@@ -86,6 +90,40 @@
         </LinearLayout>
     </ScrollView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnGuardarVenta"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/scrollView2"
+        android:background="@color/cardview_shadow_end_color"
+        android:elevation="5dp"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Total:"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2"
+            android:text="0"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
     <Button
         android:id="@+id/btnGuardarVenta"
         android:layout_width="match_parent"
@@ -93,34 +131,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Guardar" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnGuardarVenta"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="11dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp"
-        android:text="Total:"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tvTotal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_toEndOf="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
-        android:text="0"
-        android:textSize="18sp" />
+        android:layout_marginBottom="5dp"
+        android:background="#43cc70"
+        android:text="Guardar"
+        android:textColor="@color/mdtp_white" />
 
 
 </RelativeLayout>
