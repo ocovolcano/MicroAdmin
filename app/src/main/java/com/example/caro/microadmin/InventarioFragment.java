@@ -66,7 +66,7 @@ public class InventarioFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProductoActivity.class);
                 intent.putExtra("IDUsuario", getArguments().getInt("IDUsuario"));
-                startActivity(intent);
+                startActivityForResult(intent, 3);
             }
         });
 
@@ -88,25 +88,17 @@ public class InventarioFragment extends Fragment {
 
         //listaInventario.setAdapter(adapter);
 
-        busqueda = (EditText) getView().findViewById(R.id.tf_buscar_inventario);
-        busqueda.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode == 3 ) {
+            if(data.getBooleanExtra("nuevoProducto", true)) {
+                ObtenerInventario();
+                adapter.notifyDataSetChanged();
             }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-
-
-            }
-        });
+        }
     }
 
     private void ObtenerInventario() {

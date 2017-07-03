@@ -2,8 +2,10 @@ package com.example.caro.microadmin;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -62,11 +65,14 @@ public class AgregarEncargo extends AppCompatActivity{
     private int idCliente = -1;
     private  HashMap<Integer,Integer> hashPosicionesCliente;
     private Calendar myCalendar;
+    private Intent intent;
+    private ImageButton cerrar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_encargo);
-        this.setTitle("Nuevo Encargo");
+        intent = new Intent();
         fabAgregarProducto = (FloatingActionButton) findViewById(R.id.fab_agregarProductoEncargo);
         fabAgregarProducto.hide();
         listaClientes = (ArrayList<Cliente>)getIntent().getSerializableExtra("arrayClientes");
@@ -188,6 +194,15 @@ public class AgregarEncargo extends AppCompatActivity{
                 }
         );
 
+        cerrar = (ImageButton)findViewById(R.id.bt_cerrar_encargo);
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
     }
 
 
@@ -202,6 +217,7 @@ public class AgregarEncargo extends AppCompatActivity{
                     boolean agregado = JsonResponse.getBoolean("success");
 
                     if (agregado) {
+                        intent.putExtra("nuevoEncargo", true);
                         mostrarMensaje("Se ha guardado correctamente");
 
                     } else {

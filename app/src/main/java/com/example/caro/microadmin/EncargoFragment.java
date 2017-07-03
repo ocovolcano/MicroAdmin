@@ -1,13 +1,18 @@
 package com.example.caro.microadmin;
 
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -35,6 +40,7 @@ public class EncargoFragment extends Fragment{
     private ArrayList<Encargo> listaEncargos;
     private HashMap<String,ArrayList <String>> encabezado;
     private ExpandableListView expandableListView;
+    private ExpansibleListViewAdapterEncargos expandableListViewAdapter;
 
     private FloatingActionButton fab;
     @Nullable
@@ -56,14 +62,26 @@ public class EncargoFragment extends Fragment{
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AgregarEncargo.class);
                 intent.putExtra("IDUsuario", getArguments().getInt("IDUsuario"));
-                intent.putExtra("arrayClientes",listaClientes);
-                intent.putExtra("arrayProductos",listaProductos);
-                startActivity(intent);
+                intent.putExtra("arrayClientes", listaClientes);
+                intent.putExtra("arrayProductos", listaProductos);
+                startActivityForResult(intent, 2);
             }
         });
 
         expandableListView = (ExpandableListView) getView().findViewById(R.id.listaEncargoselv);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode == 2 ) {
+            if(data.getBooleanExtra("nuevoEncargo", true)) {
+                obtenerEncargado();
+                expandableListViewAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+
 
     private void obtenerClientes() {
         listaClientes = new ArrayList<Cliente>();
@@ -188,7 +206,7 @@ public class EncargoFragment extends Fragment{
             item.add(listaEncargos.get(i).getTelefono());
             encabezado.put(Integer.toString(i),item);
         }
-        ExpansibleListViewAdapterEncargos expandableListViewAdapter = new ExpansibleListViewAdapterEncargos(getContext(), listaEncargos,encabezado);
+        expandableListViewAdapter = new ExpansibleListViewAdapterEncargos(getContext(), listaEncargos,encabezado);
 
         expandableListView.setAdapter(expandableListViewAdapter);
     }

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,8 @@ public class AgregarVenta extends AppCompatActivity {
     TextView tvTotal;
     int cantidad;
     double total = 0 ;
+    private ImageButton cerrar;
+    private Intent intent;
 
     public static final String FIRST_COLUMN="First";
     public static final String SECOND_COLUMN="Second";
@@ -52,7 +55,18 @@ public class AgregarVenta extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_venta);
-        this.setTitle("Nueva Venta");
+        intent = new Intent();
+
+        cerrar = (ImageButton)findViewById(R.id.bt_cerrar);
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+
         cantidad = 0;
         listaProductos = (ArrayList<Producto>)getIntent().getSerializableExtra("arrayProductos");
 
@@ -212,6 +226,8 @@ public class AgregarVenta extends AppCompatActivity {
                             boolean agregado = JsonResponse.getBoolean("success");
 
                             if (agregado) {
+
+                                intent.putExtra("nuevaVenta",true);
                                 mostrarMensaje("Se ha guardado correctamente");
 
                             } else {

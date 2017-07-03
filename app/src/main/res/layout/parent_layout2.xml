@@ -3,8 +3,9 @@
     android:id="@+id/fechaVenta"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     android:background="?attr/colorButtonNormal"
-    android:layout_margin="20dp">
+    android:longClickable="false">
 
 
     <TextView
@@ -35,12 +36,12 @@
         android:id="@+id/fechaEncargotv"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="TextView"
-        android:textSize="16dp"
-        android:layout_below="@+id/telefonoEncargotv"
+        android:layout_alignEnd="@+id/telefonoEncargotv"
         android:layout_alignLeft="@+id/telefonoEncargotv"
-        android:layout_alignStart="@+id/telefonoEncargotv"
         android:layout_alignRight="@+id/telefonoEncargotv"
-        android:layout_alignEnd="@+id/telefonoEncargotv" />
+        android:layout_alignStart="@+id/telefonoEncargotv"
+        android:layout_below="@+id/telefonoEncargotv"
+        android:text="TextView"
+        android:textSize="16dp" />
 
 </RelativeLayout>

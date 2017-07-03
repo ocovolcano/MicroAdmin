@@ -2,12 +2,14 @@ package com.example.caro.microadmin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -25,12 +27,13 @@ public class AgregarCliente extends AppCompatActivity {
     private EditText Telefono;
     private Button Guardar;
     private Intent intent;
+    private ImageButton cerrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_cliente);
-        this.setTitle("Agregar Cliente");
+        intent = new Intent();
         Nombre = (EditText) findViewById(R.id.tf_nombre_cliente);
         PrimerApellido = (EditText) findViewById(R.id.tf_apellido_1);
         SegundoApellido = (EditText) findViewById(R.id.tf_apellido_2);
@@ -70,11 +73,20 @@ public class AgregarCliente extends AppCompatActivity {
                 }
             }
         });
+
+        cerrar = (ImageButton) findViewById(R.id.bt_cerrar_cliente);
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 
     public void guardarCliente(){
         final ProgressDialog loading = ProgressDialog.show(this,"Guardando...","Por favor espere...",false,false);
-        intent = new Intent(this, MainInventarioActivity.class);
+
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
 
@@ -86,6 +98,7 @@ public class AgregarCliente extends AppCompatActivity {
 
                     if (registrado) {
                         loading.dismiss();
+                        intent.putExtra("nuevaVenta",true);
                         mostrarMensaje("Se ha registrado correctamente");
                         Nombre.setText("");
                         PrimerApellido.setText("");

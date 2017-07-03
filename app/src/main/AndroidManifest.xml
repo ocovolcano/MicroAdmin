@@ -31,7 +31,8 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".RegistroActivity" />
-        <activity android:name=".ProductoActivity" />
+        <activity android:name=".ProductoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MainInventarioActivity"
             android:label="@string/title_activity_main_inventario"
@@ -39,9 +40,12 @@
         <activity android:name=".MostrarProducto" />
         <activity
             android:name=".AgregarVenta"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".AgregarCliente" />
+        <activity android:name=".AgregarCliente"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AgregarEncargo"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing"></activity>
     </application>
 

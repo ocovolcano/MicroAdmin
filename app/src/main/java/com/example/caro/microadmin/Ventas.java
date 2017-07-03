@@ -36,6 +36,7 @@ public class Ventas extends Fragment{
     private ArrayList<Venta>listaVentas;
     private ExpandableListView expandableListView;
     private HashMap<String,ArrayList <String>> encabezado;
+    private ExpandableListViewAdapter expandableListViewAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class Ventas extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         obtenerVentas();
 
+
+
         getActivity().setTitle("Ventas");
         fab = (FloatingActionButton) getView().findViewById(R.id.fabVentas);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,12 +67,23 @@ public class Ventas extends Fragment{
                 Intent intent = new Intent(getActivity(), AgregarVenta.class);
                 intent.putExtra("IDUsuario", getArguments().getInt("IDUsuario"));
                 intent.putExtra("arrayProductos",listaProductos);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
         expandableListView = (ExpandableListView) getView().findViewById(R.id.listaVentaselv);
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode == 0 ) {
+            if(data.getBooleanExtra("nuevaVenta", true)) {
+                obtenerVentas();
+                expandableListViewAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
     public void ObtenerInventario() {
         listaProductos = new ArrayList<Producto>();
         Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -161,7 +175,7 @@ public class Ventas extends Fragment{
             item.add( Integer.toString((listaVentas.get(i).getIdVenta())));
             encabezado.put(Integer.toString(i),item);
         }
-        ExpandableListViewAdapter expandableListViewAdapter = new ExpandableListViewAdapter(getContext(), listaVentas,encabezado);
+        expandableListViewAdapter = new ExpandableListViewAdapter(getContext(), listaVentas,encabezado);
 
         expandableListView.setAdapter(expandableListViewAdapter);
     }

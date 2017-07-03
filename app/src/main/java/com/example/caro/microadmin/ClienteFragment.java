@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ListView;
 
 import com.android.volley.RequestQueue;
@@ -30,6 +34,8 @@ public class ClienteFragment extends Fragment {
     private FloatingActionButton fab;
     private ArrayList<Cliente> listaClientes;
     private ListView listViewClientes;
+    private EditText busqueda;
+    private ArrayAdapter<String> adapter;
 
 
     @Override
@@ -49,11 +55,42 @@ public class ClienteFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AgregarCliente.class);
                 intent.putExtra("IDUsuario", getArguments().getInt("IDUsuario"));
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         obtenerClientes();
 
+        busqueda = (EditText) getView().findViewById(R.id.tf_buscar_clientes);
+        busqueda.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Filter f = adapter.getFilter();
+                    f.filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( requestCode == 1 ) {
+            if(data.getBooleanExtra("nuevoCliente", true)) {
+                obtenerClientes();
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
 
@@ -89,7 +126,7 @@ public class ClienteFragment extends Fragment {
                         listaNombres.add(cliente.getNombre() + " " + cliente.getPrimerApellido() + " " + cliente.getSegundoApellido());
                     }
 
-                    final ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listaNombres);
+                     adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listaNombres);
 
 
                     listViewClientes.setAdapter(adapter);

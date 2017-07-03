@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -70,18 +71,16 @@ public class ProductoActivity extends AppCompatActivity {
     private String UPLOAD_URL ="http://microadmin.000webhostapp.com/AgregarProducto.php";
     private Bitmap bitmap;
     private String KEY_IMAGE = "imagenCodificada";
-    private Intent intent;
-
-
     private String mpath;
+    private Intent intent;
+    private ImageButton cerrar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_producto);
-        this.setTitle("Nuevo Producto");
-
+        //intent = new Intent();
 
         mSetimageView = (ImageView) findViewById(R.id.producto_placeholder);
         mbuttonImage =(FloatingActionButton) findViewById(R.id.bt_subir_imagen);
@@ -146,6 +145,15 @@ public class ProductoActivity extends AppCompatActivity {
                 }else {
                 uploadImage();
                 }
+            }
+        });
+
+        cerrar = (ImageButton)findViewById(R.id.bt_cerrar_producto);
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
@@ -350,7 +358,7 @@ public class ProductoActivity extends AppCompatActivity {
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-
+                            intent.putExtra("nuevoProducto", true);
                             Toast.makeText(ProductoActivity.this, "Se ha guardado correctamente", Toast.LENGTH_LONG).show();
                             nombre.setText("");
                             codigo.setText("");
@@ -358,9 +366,6 @@ public class ProductoActivity extends AppCompatActivity {
                             costoManufactura.setText("");
                             cantidad.setText("");
                             mSetimageView.setImageResource(android.R.drawable.ic_menu_camera);
-
-                            finish();
-                            startActivity(intent);
 
 
                     }
