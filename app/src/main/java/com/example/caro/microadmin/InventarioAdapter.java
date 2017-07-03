@@ -86,6 +86,7 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
                     int posicion = getAdapterPosition();
                     Intent intent = new Intent(context,MostrarProducto.class);
                     intent.putExtra("Producto",listaProductos.get(posicion));
+                    intent.putExtra("posicion",posicion);
                     context.startActivity(intent);
                 }
             });
@@ -96,6 +97,8 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
         public void onClick(View v) {
 
         }
+
+
 
     }//Fin clase ViewHolder
 

@@ -41,9 +41,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -359,6 +364,9 @@ public class ProductoActivity extends AppCompatActivity {
                         loading.dismiss();
                         //Showing toast message of the response
                             intent.putExtra("nuevoProducto", true);
+                            ObtenerInventario();
+                            InventarioFragment.adapter.notifyDataSetChanged();
+
                             Toast.makeText(ProductoActivity.this, "Se ha guardado correctamente", Toast.LENGTH_LONG).show();
                             nombre.setText("");
                             codigo.setText("");
@@ -410,6 +418,41 @@ public class ProductoActivity extends AppCompatActivity {
 
         //Adding request to the queue
         requestQueue.add(stringRequest);
+    }
+
+    public  void ObtenerInventario() {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+
+                    JSONArray jsonArray = new JSONArray(response);
+
+
+                    for (int i=0; i< jsonArray.length(); i++) {
+                        JSONObject jsonResponse = jsonArray.getJSONObject(i);
+
+                        int IDProducto = jsonResponse.getInt("idProducto");
+                        String codigo = jsonResponse.getString("codigo");
+                        String nombre = jsonResponse.getString("nombre");
+                        String URL = jsonResponse.getString("urlImagen");
+                        double precioUnidad = jsonResponse.getDouble("precioUnidad");
+                        double costoManufactura = jsonResponse.getDouble("costoManufactura");
+                        int cantidad = jsonResponse.getInt("cantidad");
+                        Producto producto = new Producto(IDProducto, codigo, nombre, URL, precioUnidad, costoManufactura, cantidad);
+                        InventarioFragment.listaProductos.add(producto);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        InventarioRequest inventarioRequest = new InventarioRequest(responseListener,  getIntent().getIntExtra("IDUsuario", 0));
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(inventarioRequest);
     }
 
 

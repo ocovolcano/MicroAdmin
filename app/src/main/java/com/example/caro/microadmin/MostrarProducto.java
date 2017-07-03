@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +34,14 @@ public class MostrarProducto extends AppCompatActivity {
     public TextView cantidad;
     private Button eliminarProducto;
     private String DELETE_URL = "http://microadmin.000webhostapp.com/EliminarProducto.php";
+    private ImageButton cerrar;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_producto);
+        intent = new Intent();
         producto = (Producto) getIntent().getSerializableExtra("Producto");
         imagenProducto = (ImageView) this.findViewById(R.id.imagenProducto);
         nombreProducto = (TextView) this.findViewById(R.id.tvNombreProducto);
@@ -58,6 +62,14 @@ public class MostrarProducto extends AppCompatActivity {
                 mostrarAlerta();
             }
         });
+
+        cerrar = (ImageButton) findViewById(R.id.bt_cerrar_mostrar);
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void eliminarProducto(final int idProducto) {
@@ -65,14 +77,13 @@ public class MostrarProducto extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, DELETE_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("LEYINNNNNNNNNNNNNNNNNNN: " + response);
+
                 Toast.makeText(MostrarProducto.this, "Se ha eliminado correctamente", Toast.LENGTH_LONG).show();
             }
         },
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        System.out.println("LEYINNNNNNNNNNNNNNNNNNN: " + volleyError);
 
                         //Showing toast
                         Toast.makeText(MostrarProducto.this, "Ha ocurrido un error", Toast.LENGTH_LONG).show();
@@ -107,10 +118,12 @@ public class MostrarProducto extends AppCompatActivity {
         builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 eliminarProducto(producto.getIDProducto());
-                //finish();
-                //startActivity(intent);
+                InventarioFragment.listaProductos.remove(getIntent().getIntExtra("posicion",0));
+                InventarioFragment.adapter.notifyItemRemoved(getIntent().getIntExtra("posicion",0));
+                InventarioFragment.adapter.notifyDataSetChanged();
+
                 finish();
-                startActivity(intent);
+
 
 
             }

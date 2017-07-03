@@ -35,9 +35,9 @@ public class InventarioFragment extends Fragment {
     //private ListView listaInventario;
     private RecyclerView recycler;
     private RecyclerView.LayoutManager layoutManager;
-    private  RecyclerView.Adapter adapter;
+    public static  RecyclerView.Adapter adapter;
     private EditText busqueda;
-    private ArrayList<Producto> listaProductos;
+    public static ArrayList<Producto> listaProductos;
     //private InventarioAdapter adapter;
 
 
@@ -91,17 +91,9 @@ public class InventarioFragment extends Fragment {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( requestCode == 3 ) {
-            if(data.getBooleanExtra("nuevoProducto", true)) {
-                ObtenerInventario();
-                adapter.notifyDataSetChanged();
-            }
-        }
-    }
 
-    private void ObtenerInventario() {
+
+    public  void ObtenerInventario() {
         listaProductos = new ArrayList<Producto>();
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
