@@ -51,6 +51,9 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        listaProductos = new ArrayList<>();
+        listaVentas = new ArrayList<>();
+        expandableListViewAdapter = new ExpandableListViewAdapter(getContext());
         ObtenerInventario();
         listaVentas = (ArrayList<Venta>) getArguments().getSerializable("listaVentas");
     }
