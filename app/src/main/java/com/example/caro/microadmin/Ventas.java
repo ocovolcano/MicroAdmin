@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,13 +33,16 @@ import java.util.Objects;
  * Created by Caro on 28/05/2017.
  */
 
-public class Ventas extends Fragment{
+public class Ventas extends Fragment implements SearchView.OnCloseListener, SearchView.OnQueryTextListener{
     private FloatingActionButton fab;
 
     private ArrayList<Producto> listaProductos = new ArrayList<>();
     private ArrayList<Venta>listaVentas;
     private ExpandableListView expandableListView;
     private HashMap<String,ArrayList <String>> encabezado;
+
+    private EditText busqueda;
+
     private ExpandableListViewAdapter expandableListViewAdapter;
 
     @Override
@@ -71,7 +78,22 @@ public class Ventas extends Fragment{
             }
         });
         expandableListView = (ExpandableListView) getView().findViewById(R.id.listaVentaselv);
+        busqueda = (EditText) getView().findViewById(R.id.tf_buscarVenta);
+        busqueda.addTextChangedListener(new TextWatcher() {
 
+
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String query = busqueda.getText().toString();
+                expandableListViewAdapter.filterData(query);
+                //expandAll();
+            }
+        });
     }
 
     @Override
@@ -118,6 +140,12 @@ public class Ventas extends Fragment{
         InventarioRequest inventarioRequest = new InventarioRequest(responseListener,  getArguments().getInt("IDUsuario"));
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(inventarioRequest);
+    }
+    private void expandAll(){
+        int count= expandableListViewAdapter.getGroupCount();
+        for (int i = 0; i< count; i++){
+            expandableListView.expandGroup(i);
+        }
     }
 
     private void obtenerVentas(){
@@ -180,4 +208,24 @@ public class Ventas extends Fragment{
         expandableListView.setAdapter(expandableListViewAdapter);
     }
 
+    @Override
+    public boolean onClose() {
+        expandableListViewAdapter.filterData("");
+        expandAll();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        expandableListViewAdapter.filterData(query);
+        expandAll();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        expandableListViewAdapter.filterData(newText);
+        expandAll();
+        return false;
+    }
 }
