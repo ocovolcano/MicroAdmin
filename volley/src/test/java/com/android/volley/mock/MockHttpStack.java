@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.HttpStack;
 
 import org.apache.http.HttpResponse;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -76,6 +77,8 @@ public class MockHttpStack implements HttpStack {
             mLastPostBody = request.getBody();
         } catch (AuthFailureError e) {
             mLastPostBody = null;
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return mResponseToReturn;
     }

@@ -18,6 +18,8 @@
         android:roundIcon="@mipmap/ic_minima"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="android.app.searchable"
+            android:resource="@xml/searchable"/>
         <activity
             android:name=".Login_Registro_Activity"
             android:theme="@style/AppTheme.NoActionBar">

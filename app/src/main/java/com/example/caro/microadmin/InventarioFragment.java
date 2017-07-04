@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.SearchView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
  * Created by  on 28/05/2017.
  */
 
-public class InventarioFragment extends Fragment {
+public class InventarioFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener{
 
     private FloatingActionButton fab;
     //private ListView listaInventario;
@@ -127,5 +128,20 @@ public class InventarioFragment extends Fragment {
         InventarioRequest inventarioRequest = new InventarioRequest(responseListener,  getArguments().getInt("IDUsuario"));
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(inventarioRequest);
+    }
+
+    @Override
+    public boolean onClose() {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

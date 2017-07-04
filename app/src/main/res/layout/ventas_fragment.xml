@@ -4,6 +4,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/tf_buscarVenta"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:drawablePadding="2dp"
+        android:layout_marginTop="60dp"
+        android:hint="@string/buscar"
+        android:title="@string/search" />
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -22,7 +32,8 @@
             android:id="@+id/listaVentaselv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp" />
+            android:layout_marginTop="20dp"
+            />
 
     </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

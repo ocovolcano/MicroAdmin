@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by Jean on 6/17/2017.
@@ -18,12 +20,16 @@ class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private ArrayList<Venta> parentDataSource;
+    private ArrayList<Venta> hijosOriginal;
     private HashMap<String,ArrayList <String>> encabezado;
+    private HashMap<String,ArrayList<String>> encabezadoOriginal;
 
-    public ExpandableListViewAdapter(Context context, ArrayList<Venta> childParent, HashMap<String,ArrayList <String>> encabezado) {
+    public ExpandableListViewAdapter(Context context, ArrayList<Venta> childParent, HashMap<String,ArrayList <String>> encabezado1) {
         this.context = context;
-        this.encabezado = encabezado;
+        this.encabezado = encabezado1;
+        this.encabezadoOriginal =encabezado1;
         this.parentDataSource =childParent;
+        this.hijosOriginal = childParent;
     }
 
     @Override
@@ -108,6 +114,48 @@ class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public void filterData(String query){
+        query = query.toLowerCase();
+
+        if(query.isEmpty()){
+            encabezado.putAll(encabezadoOriginal);
+            parentDataSource.addAll(hijosOriginal);
+        }else{
+            HashMap<String,ArrayList<String>> encabezadoNuevo = new HashMap();
+            ArrayList<Venta> nuevosHijos = new ArrayList<>();
+            for (int i = 0;i<hijosOriginal.size();i++){
+
+                Venta venta =hijosOriginal.get(i);
+                String fecha = venta.getFecha();
+                String ano = fecha.substring(0,4);
+                String mes = fecha.substring(5,7);
+                String dia = fecha.substring(8,10);
+
+                if(String.valueOf( venta.getIdVenta()).toLowerCase().contains(query) ||
+                        mes.toLowerCase().contains(query) || ano.toLowerCase().contains(query)
+                        || dia.toLowerCase().contains(query)){
+                        nuevosHijos.add(hijosOriginal.get(i));
+                        ArrayList<String> item = new ArrayList<>();
+                        item.add(fecha);
+                        item.add(Integer.toString(venta.getIdVenta()));
+                        encabezadoNuevo.put(Integer.toString(i),item);
+                }
+
+
+            }
+            if (nuevosHijos.size()>0 && parentDataSource.size() !=nuevosHijos.size() ){
+                parentDataSource = nuevosHijos;
+                encabezado = encabezadoNuevo;
+            }
+        }
+        try {
+            notifyDataSetChanged();
+        }catch (Exception e){
+
+        }
+
     }
 
 }
