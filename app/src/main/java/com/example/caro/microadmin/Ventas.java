@@ -39,7 +39,6 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
     private ArrayList<Producto> listaProductos = new ArrayList<>();
     private ArrayList<Venta>listaVentas;
     private ExpandableListView expandableListView;
-    private HashMap<String,ArrayList <String>> encabezado;
 
     private EditText busqueda;
 
@@ -183,7 +182,8 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
                         Venta venta = new Venta(idVenta,fecha,productosVenta);
                         listaVentas.add(venta);
                     }
-                    crearArrayEncabezado();
+                    expandableListViewAdapter = new ExpandableListViewAdapter(getContext(), listaVentas);
+                    expandableListView.setAdapter(expandableListViewAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -195,18 +195,6 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
     }
 
 
-    private void crearArrayEncabezado(){
-        encabezado = new HashMap<>();
-        for(int i = 0 ; i<listaVentas.size();i++){
-            ArrayList<String> item = new ArrayList<>();
-            item.add(listaVentas.get(i).getFecha());
-            item.add( Integer.toString((listaVentas.get(i).getIdVenta())));
-            encabezado.put(Integer.toString(i),item);
-        }
-        expandableListViewAdapter = new ExpandableListViewAdapter(getContext(), listaVentas,encabezado);
-
-        expandableListView.setAdapter(expandableListViewAdapter);
-    }
 
     @Override
     public boolean onClose() {

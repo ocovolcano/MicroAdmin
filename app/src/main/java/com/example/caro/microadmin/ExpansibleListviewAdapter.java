@@ -21,20 +21,16 @@ class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<Venta> parentDataSource;
     private ArrayList<Venta> hijosOriginal;
-    private HashMap<String,ArrayList <String>> encabezado;
-    private HashMap<String,ArrayList<String>> encabezadoOriginal;
 
-    public ExpandableListViewAdapter(Context context, ArrayList<Venta> childParent, HashMap<String,ArrayList <String>> encabezado1) {
+    public ExpandableListViewAdapter(Context context, ArrayList<Venta> childParent) {
         this.context = context;
-        this.encabezado = encabezado1;
-        this.encabezadoOriginal =encabezado1;
         this.parentDataSource =childParent;
         this.hijosOriginal = childParent;
     }
 
     @Override
     public int getGroupCount() {
-        return this.encabezado.size();
+        return this.parentDataSource.size();
     }
 
     @Override
@@ -45,7 +41,7 @@ class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getGroup(int groupPosition) {
-        return encabezado.get(Integer.toString(groupPosition));
+        return this.parentDataSource.get(groupPosition);
     }
 
     @Override
@@ -78,12 +74,12 @@ class ExpandableListViewAdapter extends BaseExpandableListAdapter {
             view = inflater.inflate(R.layout.parent_layout, parent, false);
         }
 
-        ArrayList<String> parentHeader = (ArrayList<String>) getGroup(groupPosition);
+        Venta parentHeader = (Venta) getGroup(groupPosition);
 
         TextView parentItem1 = (TextView)view.findViewById(R.id.nombreClienteEncargotv);
         TextView parentItem2 = (TextView)view.findViewById(R.id.telefonoEncargotv);
-        parentItem1.setText("Numero Venta :"+parentHeader.get(1));
-        parentItem2.setText("Fecha :"+parentHeader.get(0));
+        parentItem1.setText("Numero Venta :"+parentHeader.getIdVenta());
+        parentItem2.setText("Fecha :"+parentHeader.getFecha());
         return view;
     }
 
@@ -118,9 +114,8 @@ class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     public void filterData(String query){
         query = query.toLowerCase();
-
         if(query.isEmpty()){
-            encabezado.putAll(encabezadoOriginal);
+            parentDataSource.clear();
             parentDataSource.addAll(hijosOriginal);
         }else{
             HashMap<String,ArrayList<String>> encabezadoNuevo = new HashMap();
@@ -129,25 +124,16 @@ class ExpandableListViewAdapter extends BaseExpandableListAdapter {
 
                 Venta venta =hijosOriginal.get(i);
                 String fecha = venta.getFecha();
-                String ano = fecha.substring(0,4);
-                String mes = fecha.substring(5,7);
-                String dia = fecha.substring(8,10);
 
                 if(String.valueOf( venta.getIdVenta()).toLowerCase().contains(query) ||
-                        mes.toLowerCase().contains(query) || ano.toLowerCase().contains(query)
-                        || dia.toLowerCase().contains(query)){
+                        fecha.toLowerCase().contains(query)){
                         nuevosHijos.add(hijosOriginal.get(i));
-                        ArrayList<String> item = new ArrayList<>();
-                        item.add(fecha);
-                        item.add(Integer.toString(venta.getIdVenta()));
-                        encabezadoNuevo.put(Integer.toString(i),item);
                 }
 
 
             }
             if (nuevosHijos.size()>0 && parentDataSource.size() !=nuevosHijos.size() ){
                 parentDataSource = nuevosHijos;
-                encabezado = encabezadoNuevo;
             }
         }
         try {
