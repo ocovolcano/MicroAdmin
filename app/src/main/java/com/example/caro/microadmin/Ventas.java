@@ -1,18 +1,22 @@
 package com.example.caro.microadmin;
 
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -93,6 +97,93 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
                 //expandAll();
             }
         });
+
+        expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                long packedPosition = expandableListView.getExpandableListPosition(position);
+
+                int itemType = ExpandableListView.getPackedPositionType(packedPosition);
+                int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
+                //int childPosition = ExpandableListView.getPackedPositionChild(packedPosition);
+
+
+        /*  if group item clicked */
+                if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+
+                    parentLongClick(groupPosition);
+                }
+
+                return false;
+            }
+        });
+    }
+
+    private void parentLongClick(final int groupPosition) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setMessage(("¿Está seguro que desea eliminar la venta?")).setTitle("Eliminar Venta");
+
+        // Add the buttons
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                eliminarVenta(listaVentas.get(groupPosition));
+
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+
+// Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void eliminarVenta(Venta venta) {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+
+                    JSONObject JsonResponse = new JSONObject(response);
+                    boolean eliminado = JsonResponse.getBoolean("success");
+
+                    if (eliminado) {
+                        obtenerVentas();
+                        expandableListViewAdapter.notifyDataSetChanged();
+                        mostrarMensaje("Se ha eliminado correctamente");
+
+                    } else {
+                        mostrarMensaje("Ha ocurrido un error");
+
+                    }
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        EliminarVentaRequest ventaRequest = new EliminarVentaRequest(responseListener, venta.getIdVenta());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(ventaRequest);
+    }
+
+    private void mostrarMensaje(String mensaje){
+        CharSequence text = mensaje;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getContext(), text, duration);
+        toast.show();
     }
 
     @Override
@@ -156,13 +247,18 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
                 try {
 
                     JSONArray jsonArray = new JSONArray(response);
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
                     listaVentas = new ArrayList<>();
                     for (int i=0; i< jsonArray.length(); i++) {
                         JSONObject jsonResponse = jsonArray.getJSONObject(i);
 
                         int idVenta = jsonResponse.getInt("idVenta");
-                        String fecha = jsonResponse.getString("fecha");
+                        String fechaActual = jsonResponse.getString("fecha");
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        java.util.Date newDate = format.parse(fechaActual);
+
+                        format = new SimpleDateFormat("dd/MM/yyyy");
+                        String date = format.format(newDate);
                         String idUsuario = jsonResponse.getString("idUsuario");
                         ArrayList<lineaVenta> productosVenta = new ArrayList<>();
                         JSONArray productos = jsonResponse.getJSONArray("productos");
@@ -179,12 +275,14 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
                         }
                         lineaVenta total = new lineaVenta("Total", montoTotal);
                         productosVenta.add(total);
-                        Venta venta = new Venta(idVenta,fecha,productosVenta);
+                        Venta venta = new Venta(idVenta,date,productosVenta);
                         listaVentas.add(venta);
                     }
                     expandableListViewAdapter = new ExpandableListViewAdapter(getContext(), listaVentas);
                     expandableListView.setAdapter(expandableListViewAdapter);
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
