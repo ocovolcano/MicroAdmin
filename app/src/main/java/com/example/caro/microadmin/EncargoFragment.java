@@ -9,11 +9,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -46,6 +49,7 @@ public class EncargoFragment extends Fragment{
     private HashMap<String,ArrayList <String>> encabezado;
     private ExpandableListView expandableListView;
     private ExpansibleListViewAdapterEncargos expandableListViewAdapter;
+    private EditText busqueda;
 
 
     private FloatingActionButton fab;
@@ -92,6 +96,22 @@ public class EncargoFragment extends Fragment{
                 }
                
                 return false;
+            }
+        });
+        busqueda = (EditText) getView().findViewById(R.id.tf_buscarEncargos);
+        busqueda.addTextChangedListener(new TextWatcher() {
+
+
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String query = busqueda.getText().toString();
+                expandableListViewAdapter.filterData(query);
+                //expandAll();
             }
         });
     }

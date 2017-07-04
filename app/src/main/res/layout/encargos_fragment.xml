@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/tf_buscarEncargos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
+        android:drawablePadding="2dp"
+        android:hint="@string/buscar"
+        android:layout_marginTop="60dp"/>
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,7 +32,7 @@
             android:id="@+id/listaEncargoselv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp"/>
+            android:layout_marginTop="20dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 

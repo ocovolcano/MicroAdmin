@@ -19,32 +19,32 @@ import java.util.HashMap;
 
 public class ExpansibleListViewAdapterEncargos extends BaseExpandableListAdapter {
     private ArrayList<Encargo> listaEncargos;
+    private ArrayList<Encargo> listaEncargosFiltrada;
     private Context context;
-    private HashMap<String,ArrayList <String>> encabezado;
 
     public ExpansibleListViewAdapterEncargos(Context context, ArrayList<Encargo> listaEncargo, HashMap<String,ArrayList<String>> encabezado){
         this.context = context;
         this.listaEncargos = listaEncargo;
-        this.encabezado = encabezado;
+        this.listaEncargosFiltrada = listaEncargo;
     }
     @Override
     public int getGroupCount() {
-        return this.encabezado.size();
+        return this.listaEncargosFiltrada.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listaEncargos.get(groupPosition).getListaProductosEncargados().size();
+        return this.listaEncargosFiltrada.get(groupPosition).getListaProductosEncargados().size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return  encabezado.get(Integer.toString(groupPosition));
+        return  listaEncargosFiltrada.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.listaEncargos.get(groupPosition).getListaProductosEncargados().get(childPosition);
+        return this.listaEncargosFiltrada.get(groupPosition).getListaProductosEncargados().get(childPosition);
     }
 
     @Override
@@ -70,15 +70,15 @@ public class ExpansibleListViewAdapterEncargos extends BaseExpandableListAdapter
             view = inflater.inflate(R.layout.parent_layout2, parent, false);
         }
 
-        ArrayList<String> parentHeader = (ArrayList<String>) getGroup(groupPosition);
+       Encargo parentHeader = (Encargo) getGroup(groupPosition);
 
 
         TextView parentItem1 = (TextView)view.findViewById(R.id.nombreClienteEncargotv);
         TextView parentItem2 = (TextView)view.findViewById(R.id.telefonoEncargotv);
         TextView parentItem3 = (TextView)view.findViewById(R.id.fechaEncargotv);
-        parentItem1.setText("Cliente :"+parentHeader.get(1));
-        parentItem3.setText("Fecha :"+ parentHeader.get(0));
-        parentItem2.setText("Teléfono :"+parentHeader.get(2));
+        parentItem1.setText("Cliente :"+parentHeader.getNombreCliente());
+        parentItem3.setText("Fecha :"+ parentHeader.getFecha());
+        parentItem2.setText("Teléfono :"+parentHeader.getTelefono());
         return view;
     }
 
@@ -104,5 +104,37 @@ public class ExpansibleListViewAdapterEncargos extends BaseExpandableListAdapter
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
+    }
+
+    public void filterData(String query){
+        query = query.toLowerCase();
+        if(query.isEmpty()){
+            listaEncargosFiltrada.clear();
+            listaEncargosFiltrada.addAll(listaEncargos);
+        }else{
+            ArrayList<Encargo> nuevosHijos = new ArrayList<>();
+            for (int i = 0;i<listaEncargos.size();i++){
+
+                Encargo encargo =listaEncargos.get(i);
+                String fecha = encargo.getFecha();
+                String Nombre = encargo.getNombreCliente();
+
+                if(Nombre.toLowerCase().contains(query) ||
+                        fecha.toLowerCase().contains(query)){
+                    nuevosHijos.add(listaEncargos.get(i));
+                }
+
+
+            }
+            if (nuevosHijos.size()>0 && listaEncargosFiltrada.size() !=nuevosHijos.size() ){
+                listaEncargosFiltrada = nuevosHijos;
+            }
+        }
+        try {
+            notifyDataSetChanged();
+        }catch (Exception e){
+
+        }
+
     }
 }
