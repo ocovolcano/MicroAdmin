@@ -133,7 +133,9 @@
                 android:id="@+id/bt_guardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/guardar" />
+                android:background="#43cc70"
+                android:text="@string/guardar"
+                android:textColor="@color/cardview_light_background" />
 
         </LinearLayout>
     </ScrollView>
