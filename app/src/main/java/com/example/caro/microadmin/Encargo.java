@@ -1,5 +1,7 @@
 package com.example.caro.microadmin;
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -7,7 +9,7 @@ import java.util.ArrayList;
  * Created by Jean on 6/28/2017.
  */
 
-public class Encargo implements Serializable {
+public class Encargo implements Serializable, Comparable<Encargo> {
     private int id;
     private String fecha;
     private String nombreCliente;
@@ -57,5 +59,10 @@ public class Encargo implements Serializable {
 
     public ArrayList<LineaEncargo> getListaProductosEncargados() {
         return listaProductosEncargados;
+    }
+
+    @Override
+    public int compareTo(Encargo o) {
+        return getFecha().compareTo(o.getFecha());
     }
 }

@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -69,11 +72,12 @@ public class ExpansibleListViewAdapterEncargos extends BaseExpandableListAdapter
 
         ArrayList<String> parentHeader = (ArrayList<String>) getGroup(groupPosition);
 
+
         TextView parentItem1 = (TextView)view.findViewById(R.id.nombreClienteEncargotv);
         TextView parentItem2 = (TextView)view.findViewById(R.id.telefonoEncargotv);
         TextView parentItem3 = (TextView)view.findViewById(R.id.fechaEncargotv);
         parentItem1.setText("Cliente :"+parentHeader.get(1));
-        parentItem3.setText("Fecha :"+parentHeader.get(0));
+        parentItem3.setText("Fecha :"+ parentHeader.get(0));
         parentItem2.setText("Teléfono :"+parentHeader.get(2));
         return view;
     }

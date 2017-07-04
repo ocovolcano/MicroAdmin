@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,7 +27,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -41,6 +46,7 @@ public class EncargoFragment extends Fragment{
     private HashMap<String,ArrayList <String>> encabezado;
     private ExpandableListView expandableListView;
     private ExpansibleListViewAdapterEncargos expandableListViewAdapter;
+
 
     private FloatingActionButton fab;
     @Nullable
@@ -69,7 +75,94 @@ public class EncargoFragment extends Fragment{
         });
 
         expandableListView = (ExpandableListView) getView().findViewById(R.id.listaEncargoselv);
+        expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                long packedPosition = expandableListView.getExpandableListPosition(position);
+
+                int itemType = ExpandableListView.getPackedPositionType(packedPosition);
+                int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
+                //int childPosition = ExpandableListView.getPackedPositionChild(packedPosition);
+
+
+        /*  if group item clicked */
+                if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+                    
+                    parentLongClick(groupPosition);
+                }
+               
+                return false;
+            }
+        });
     }
+
+    private void parentLongClick(final int groupPosition) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setMessage(("¿Está seguro que desea eliminar el encargo?")).setTitle("Eliminar Encargo");
+
+        // Add the buttons
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                eliminarEncargo(listaEncargos.get(groupPosition));
+
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+
+// Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void eliminarEncargo(Encargo encargo) {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+
+                    JSONObject JsonResponse = new JSONObject(response);
+                    boolean eliminado = JsonResponse.getBoolean("success");
+
+                    if (eliminado) {
+                        obtenerEncargado();
+                        expandableListViewAdapter.notifyDataSetChanged();
+                        mostrarMensaje("Se ha eliminado correctamente");
+
+                    } else {
+                        mostrarMensaje("Ha ocurrido un error");
+
+                    }
+
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        EliminarEncargoRequest encargoRequest = new EliminarEncargoRequest(responseListener, encargo.getId());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(encargoRequest);
+    }
+
+    private void mostrarMensaje(String mensaje){
+        CharSequence text = mensaje;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getContext(), text, duration);
+        toast.show();
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -171,7 +264,13 @@ public class EncargoFragment extends Fragment{
                         JSONObject jsonResponse = jsonArray.getJSONObject(i);
 
                         int idEncargo = jsonResponse.getInt("idEncargo");
-                        String fecha = jsonResponse.getString("fecha");
+                        String fechaActual = jsonResponse.getString("fecha");
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                        Date newDate = format.parse(fechaActual);
+
+                        format = new SimpleDateFormat("dd/MM/yyyy");
+                        String date = format.format(newDate);
+
                         String nombre = jsonResponse.getString("nombreCliente")+" "+jsonResponse.getString("primerApellido")+" "+jsonResponse.getString("segundoApellido");
                         String telefono = jsonResponse.getString("telefono");
                         ArrayList<LineaEncargo> listaProductosEncargados = new ArrayList<>();
@@ -183,11 +282,14 @@ public class EncargoFragment extends Fragment{
                             LineaEncargo lineaVenta = new LineaEncargo(cantidad, nombreProducto);
                             listaProductosEncargados.add(lineaVenta);
                         }
-                        Encargo producto = new Encargo(idEncargo, fecha, nombre,listaProductosEncargados,telefono);
+                        Encargo producto = new Encargo(idEncargo, date, nombre,listaProductosEncargados,telefono);
                         listaEncargos.add(producto);
+                        Collections.sort(listaEncargos);
                     }
                     crearArrayEncabezado();
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
@@ -201,6 +303,7 @@ public class EncargoFragment extends Fragment{
         encabezado = new HashMap<>();
         for(int i = 0 ; i<listaEncargos.size();i++){
             ArrayList<String> item = new ArrayList<>();
+
             item.add(listaEncargos.get(i).getFecha());
             item.add( (listaEncargos.get(i).getNombreCliente()));
             item.add(listaEncargos.get(i).getTelefono());
