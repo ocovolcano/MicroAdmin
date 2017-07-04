@@ -99,6 +99,7 @@ public class MostrarProducto extends AppCompatActivity {
                 //Adding parameters
 
                 params.put("idProducto", String.valueOf(idProducto));
+                params.put("URL", producto.getURL());
                 return params;
             }
         };
