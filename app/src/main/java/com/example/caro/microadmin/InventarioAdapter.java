@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Caro on 31/05/2017.
@@ -25,8 +26,9 @@ import java.util.ArrayList;
 
 public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.ViewHolder>{
     private Context context;
-    private final ArrayList<Producto> listaProductos;
-    private final ArrayList<Producto> filtradaListaProductos;
+    private  ArrayList<Producto> listaProductos;
+    private  ArrayList<Producto> filtradaListaProductos;
+
 
 
     public InventarioAdapter(Context context, ArrayList<Producto> listaProductos) {
@@ -38,6 +40,7 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
     }
 
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card,parent,false);
@@ -46,21 +49,21 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String nombre = listaProductos.get(position).getNombre();
-        String precioUnitario = String.valueOf(listaProductos.get(position).getPrecioUnidad());
-        String cantidad =  String.valueOf(listaProductos.get(position).getCantidad());
+        String nombre = filtradaListaProductos.get(position).getNombre();
+        String precioUnitario = String.valueOf(filtradaListaProductos.get(position).getPrecioUnidad());
+        String cantidad =  String.valueOf(filtradaListaProductos.get(position).getCantidad());
         holder.nombreProducto.setText(nombre);
-        holder.idProducto = listaProductos.get(position).getIDProducto();
+        holder.idProducto = filtradaListaProductos.get(position).getIDProducto();
         holder.cantidad.setText(cantidad);
         holder.precioUnitario.setText(precioUnitario);
-        Picasso.with(context).load(listaProductos.get(position).getURL()).into(holder.imagenProducto);
+        Picasso.with(context).load(filtradaListaProductos.get(position).getURL()).into(holder.imagenProducto);
 
 
     }
 
     @Override
     public int getItemCount() {
-        return listaProductos.size();
+        return filtradaListaProductos.size();
     }
 
 
@@ -85,7 +88,7 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
                 public void onClick(View v) {
                     int posicion = getAdapterPosition();
                     Intent intent = new Intent(context,MostrarProducto.class);
-                    intent.putExtra("Producto",listaProductos.get(posicion));
+                    intent.putExtra("Producto",filtradaListaProductos.get(posicion));
                     intent.putExtra("posicion",posicion);
                     context.startActivity(intent);
                 }
@@ -101,6 +104,36 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
 
 
     }//Fin clase ViewHolder
+
+    public void filterData(String query){
+        query = query.toLowerCase();
+        if(query.isEmpty()){
+            filtradaListaProductos.clear();
+            filtradaListaProductos.addAll(listaProductos);
+        }else{
+            ArrayList<Producto> nuevosHijos = new ArrayList<>();
+            for (int i = 0;i<listaProductos.size();i++){
+
+                Producto producto =listaProductos.get(i);
+                String Nombre = producto.getNombre();
+
+                if(Nombre.toLowerCase().contains(query)){
+                    nuevosHijos.add(listaProductos.get(i));
+                }
+
+
+            }
+            if (nuevosHijos.size()>0 && listaProductos.size() !=nuevosHijos.size() ){
+                filtradaListaProductos = nuevosHijos;
+            }
+        }
+        try {
+            notifyDataSetChanged();
+        }catch (Exception e){
+
+        }
+
+    }
 
 }//fin clase adapter
 

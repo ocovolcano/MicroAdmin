@@ -36,7 +36,7 @@ public class InventarioFragment extends Fragment implements SearchView.OnQueryTe
     //private ListView listaInventario;
     private RecyclerView recycler;
     private RecyclerView.LayoutManager layoutManager;
-    public static  RecyclerView.Adapter adapter;
+    public static  InventarioAdapter adapter;
     private EditText busqueda;
     public static ArrayList<Producto> listaProductos;
     //private InventarioAdapter adapter;
@@ -74,8 +74,22 @@ public class InventarioFragment extends Fragment implements SearchView.OnQueryTe
         recycler = (RecyclerView) getView().findViewById(R.id.recycler_view_inventario);
         layoutManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(layoutManager);
-        adapter = new InventarioAdapter(getContext(), listaProductos);
-        recycler.setAdapter(adapter);
+        busqueda = (EditText) getView().findViewById(R.id.tf_buscar_inventario);
+        busqueda.addTextChangedListener(new TextWatcher() {
+
+
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String query = busqueda.getText().toString();
+                adapter.filterData(query);
+                //expandAll();
+            }
+        });
 
 
 
@@ -118,6 +132,8 @@ public class InventarioFragment extends Fragment implements SearchView.OnQueryTe
                         Producto producto = new Producto(IDProducto, codigo, nombre, URL, precioUnidad, costoManufactura, cantidad);
                         listaProductos.add(producto);
                     }
+                    adapter = new InventarioAdapter(getContext(), listaProductos);
+                    recycler.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
