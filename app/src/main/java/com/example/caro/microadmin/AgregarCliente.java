@@ -98,7 +98,7 @@ public class AgregarCliente extends AppCompatActivity {
 
                     if (registrado) {
                         loading.dismiss();
-                        intent.putExtra("nuevaVenta",true);
+                        intent.putExtra("nuevoCliente",true);
                         mostrarMensaje("Se ha registrado correctamente");
                         Nombre.setText("");
                         PrimerApellido.setText("");

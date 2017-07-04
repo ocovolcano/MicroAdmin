@@ -48,6 +48,7 @@ public class ClienteFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        listaClientes = new ArrayList<>();
         getActivity().setTitle("Clientes");
         fab = (FloatingActionButton) getView().findViewById(R.id.fabCliente);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +89,6 @@ public class ClienteFragment extends Fragment {
         if( requestCode == 1 ) {
             if(data.getBooleanExtra("nuevoCliente", true)) {
                 obtenerClientes();
-                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -130,6 +130,7 @@ public class ClienteFragment extends Fragment {
 
 
                     listViewClientes.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

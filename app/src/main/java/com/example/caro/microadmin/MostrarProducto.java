@@ -120,7 +120,7 @@ public class MostrarProducto extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int id) {
                 eliminarProducto(producto.getIDProducto());
                 InventarioFragment.listaProductos.remove(getIntent().getIntExtra("posicion",0));
-                InventarioFragment.adapter.notifyItemRemoved(getIntent().getIntExtra("posicion",0));
+                InventarioFragment.adapter.actualizarLista(InventarioFragment.listaProductos);
                 InventarioFragment.adapter.notifyDataSetChanged();
 
                 finish();
