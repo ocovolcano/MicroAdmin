@@ -45,6 +45,8 @@ public class InventarioFragment extends Fragment implements SearchView.OnQueryTe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        listaProductos = new ArrayList<Producto>();
+        adapter = new InventarioAdapter(getContext(),listaProductos);
         ObtenerInventario();
     }
 
@@ -72,6 +74,7 @@ public class InventarioFragment extends Fragment implements SearchView.OnQueryTe
         });
 
         recycler = (RecyclerView) getView().findViewById(R.id.recycler_view_inventario);
+        recycler.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(getContext());
         recycler.setLayoutManager(layoutManager);
         busqueda = (EditText) getView().findViewById(R.id.tf_buscar_inventario);

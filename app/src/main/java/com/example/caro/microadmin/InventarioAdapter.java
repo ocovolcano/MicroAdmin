@@ -39,6 +39,14 @@ public class InventarioAdapter extends RecyclerView.Adapter<InventarioAdapter.Vi
 
     }
 
+    public InventarioAdapter(Context context){
+        this.context = context;
+    }
+
+    public void actualizarLista(ArrayList<Producto> prod){
+        this.listaProductos = prod;
+        this.filtradaListaProductos = prod;
+    }
 
 
     @Override

@@ -364,8 +364,6 @@ public class ProductoActivity extends AppCompatActivity {
                         loading.dismiss();
                         //Showing toast message of the response
                             intent.putExtra("nuevoProducto", true);
-                            ObtenerInventario();
-                            InventarioFragment.adapter.notifyDataSetChanged();
 
                             Toast.makeText(ProductoActivity.this, "Se ha guardado correctamente", Toast.LENGTH_LONG).show();
                             nombre.setText("");
@@ -374,6 +372,7 @@ public class ProductoActivity extends AppCompatActivity {
                             costoManufactura.setText("");
                             cantidad.setText("");
                             mSetimageView.setImageResource(android.R.drawable.ic_menu_camera);
+                            ObtenerInventario();
 
 
                     }
@@ -425,6 +424,7 @@ public class ProductoActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 System.out.println(response);
+                InventarioFragment.listaProductos.clear();
                 try {
 
                     JSONArray jsonArray = new JSONArray(response);
@@ -442,8 +442,10 @@ public class ProductoActivity extends AppCompatActivity {
                         int cantidad = jsonResponse.getInt("cantidad");
                         Producto producto = new Producto(IDProducto, codigo, nombre, URL, precioUnidad, costoManufactura, cantidad);
                         InventarioFragment.listaProductos.add(producto);
-                    }
 
+                    }
+                    InventarioFragment.adapter.actualizarLista(InventarioFragment.listaProductos);
+                    InventarioFragment.adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

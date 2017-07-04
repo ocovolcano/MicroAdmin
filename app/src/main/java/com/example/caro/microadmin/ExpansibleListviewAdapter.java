@@ -28,6 +28,15 @@ class ExpandableListViewAdapter extends BaseExpandableListAdapter {
         this.hijosOriginal = childParent;
     }
 
+    public ExpandableListViewAdapter(Context context){
+        this.context = context;
+    }
+
+    public void ActulizarLista(ArrayList<Venta> listaVentas){
+        parentDataSource = listaVentas;
+        hijosOriginal = listaVentas;
+    }
+
     @Override
     public int getGroupCount() {
         return this.parentDataSource.size();

@@ -27,6 +27,16 @@ public class ExpansibleListViewAdapterEncargos extends BaseExpandableListAdapter
         this.listaEncargos = listaEncargo;
         this.listaEncargosFiltrada = listaEncargo;
     }
+
+    public ExpansibleListViewAdapterEncargos(Context context){
+        this.context = context;
+    }
+
+    public void ActualizarLista(ArrayList<Encargo> listaEncargos){
+        this.listaEncargosFiltrada = listaEncargos;
+        this.listaEncargos = listaEncargos;
+    }
+
     @Override
     public int getGroupCount() {
         return this.listaEncargosFiltrada.size();

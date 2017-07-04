@@ -63,6 +63,10 @@ public class EncargoFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Encargos");
+        listaEncargos = new ArrayList<>();
+        listaProductos = new ArrayList<>();
+        listaClientes = new ArrayList<>();
+        expandableListViewAdapter =  new ExpansibleListViewAdapterEncargos(getContext());
         obtenerClientes();
         obtenerInventario();
         obtenerEncargado();
