@@ -250,6 +250,7 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
                 System.out.println(response);
                 try {
                     String respuesta = response.toString();
+                    
                     listaVentas = new ArrayList<>();
                     if( !respuesta.equals("0 results")) {
                         JSONArray jsonArray = new JSONArray(response);
