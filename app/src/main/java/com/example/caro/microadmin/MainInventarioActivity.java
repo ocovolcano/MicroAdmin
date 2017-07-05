@@ -1,5 +1,6 @@
 package com.example.caro.microadmin;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -108,7 +109,11 @@ public class MainInventarioActivity extends AppCompatActivity
         bundle.putInt("IDUsuario", getIntent().getIntExtra("IDUsuario", 0));
         fragment = new ClienteFragment();
         fragment.setArguments(bundle);
-    }
+    }else  if(id == R.id.nav_logout){
+            Intent intent = new Intent(MainInventarioActivity.this, Login_Registro_Activity.class);
+            startActivity(intent);
+            finish();
+        }
 
         if(fragment != null){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
