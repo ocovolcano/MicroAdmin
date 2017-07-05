@@ -159,7 +159,6 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
 
                     if (eliminado) {
                         obtenerVentas();
-                        expandableListViewAdapter.notifyDataSetChanged();
                         mostrarMensaje("Se ha eliminado correctamente");
 
                     } else {
@@ -206,22 +205,24 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
             public void onResponse(String response) {
                 System.out.println(response);
                 try {
+                    String respuesta = response.toString();
+                    if( !respuesta.equals("0 results")) {
+                        JSONArray jsonArray = new JSONArray(response);
 
-                    JSONArray jsonArray = new JSONArray(response);
 
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonResponse = jsonArray.getJSONObject(i);
 
-                    for (int i=0; i< jsonArray.length(); i++) {
-                        JSONObject jsonResponse = jsonArray.getJSONObject(i);
-
-                        int IDProducto = jsonResponse.getInt("idProducto");
-                        String codigo = jsonResponse.getString("codigo");
-                        String nombre = jsonResponse.getString("nombre");
-                        String URL = jsonResponse.getString("urlImagen");
-                        double precioUnidad = jsonResponse.getDouble("precioUnidad");
-                        double costoManufactura = jsonResponse.getDouble("costoManufactura");
-                        int cantidad = jsonResponse.getInt("cantidad");
-                        Producto producto = new Producto(IDProducto, codigo, nombre, URL, precioUnidad, costoManufactura, cantidad);
-                        listaProductos.add(producto);
+                            int IDProducto = jsonResponse.getInt("idProducto");
+                            String codigo = jsonResponse.getString("codigo");
+                            String nombre = jsonResponse.getString("nombre");
+                            String URL = jsonResponse.getString("urlImagen");
+                            double precioUnidad = jsonResponse.getDouble("precioUnidad");
+                            double costoManufactura = jsonResponse.getDouble("costoManufactura");
+                            int cantidad = jsonResponse.getInt("cantidad");
+                            Producto producto = new Producto(IDProducto, codigo, nombre, URL, precioUnidad, costoManufactura, cantidad);
+                            listaProductos.add(producto);
+                        }
                     }
 
                 } catch (JSONException e) {
@@ -248,38 +249,41 @@ public class Ventas extends Fragment implements SearchView.OnCloseListener, Sear
             public void onResponse(String response) {
                 System.out.println(response);
                 try {
-
-                    JSONArray jsonArray = new JSONArray(response);
-
+                    String respuesta = response.toString();
                     listaVentas = new ArrayList<>();
-                    for (int i=0; i< jsonArray.length(); i++) {
-                        JSONObject jsonResponse = jsonArray.getJSONObject(i);
+                    if( !respuesta.equals("0 results")) {
+                        JSONArray jsonArray = new JSONArray(response);
 
-                        int idVenta = jsonResponse.getInt("idVenta");
-                        String fechaActual = jsonResponse.getString("fecha");
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        java.util.Date newDate = format.parse(fechaActual);
 
-                        format = new SimpleDateFormat("dd/MM/yyyy");
-                        String date = format.format(newDate);
-                        String idUsuario = jsonResponse.getString("idUsuario");
-                        ArrayList<lineaVenta> productosVenta = new ArrayList<>();
-                        JSONArray productos = jsonResponse.getJSONArray("productos");
-                        double montoTotal = 0;
-                        for (int j =  0 ; j<productos.length(); j++){
-                            JSONObject  producto = productos.getJSONObject(j);
-                            int idProducto = producto.getInt("idProducto");
-                            int cantidad = producto.getInt("cantidad");
-                            String nombre = producto.getString("nombre");
-                            double precioUnidad = producto.getDouble("precioUnidad");
-                            montoTotal+=(cantidad*precioUnidad);
-                            lineaVenta lineaVenta = new lineaVenta(nombre,cantidad*precioUnidad);
-                            productosVenta.add(lineaVenta);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonResponse = jsonArray.getJSONObject(i);
+
+                            int idVenta = jsonResponse.getInt("idVenta");
+                            String fechaActual = jsonResponse.getString("fecha");
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            java.util.Date newDate = format.parse(fechaActual);
+
+                            format = new SimpleDateFormat("dd/MM/yyyy");
+                            String date = format.format(newDate);
+                            String idUsuario = jsonResponse.getString("idUsuario");
+                            ArrayList<lineaVenta> productosVenta = new ArrayList<>();
+                            JSONArray productos = jsonResponse.getJSONArray("productos");
+                            double montoTotal = 0;
+                            for (int j = 0; j < productos.length(); j++) {
+                                JSONObject producto = productos.getJSONObject(j);
+                                int idProducto = producto.getInt("idProducto");
+                                int cantidad = producto.getInt("cantidad");
+                                String nombre = producto.getString("nombre");
+                                double precioUnidad = producto.getDouble("precioUnidad");
+                                montoTotal += (cantidad * precioUnidad);
+                                lineaVenta lineaVenta = new lineaVenta(nombre, cantidad * precioUnidad);
+                                productosVenta.add(lineaVenta);
+                            }
+                            lineaVenta total = new lineaVenta("Total", montoTotal);
+                            productosVenta.add(total);
+                            Venta venta = new Venta(idVenta, date, productosVenta);
+                            listaVentas.add(venta);
                         }
-                        lineaVenta total = new lineaVenta("Total", montoTotal);
-                        productosVenta.add(total);
-                        Venta venta = new Venta(idVenta,date,productosVenta);
-                        listaVentas.add(venta);
                     }
                     expandableListViewAdapter = new ExpandableListViewAdapter(getContext(), listaVentas);
                     expandableListView.setAdapter(expandableListViewAdapter);

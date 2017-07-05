@@ -157,7 +157,6 @@ public class EncargoFragment extends Fragment{
 
                     if (eliminado) {
                         obtenerEncargado();
-                        expandableListViewAdapter.notifyDataSetChanged();
                         mostrarMensaje("Se ha eliminado correctamente");
 
                     } else {
@@ -225,7 +224,7 @@ public class EncargoFragment extends Fragment{
                         listaClientes.add(cliente);
                     }
 
-
+                    expandableListViewAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -280,35 +279,37 @@ public class EncargoFragment extends Fragment{
             public void onResponse(String response) {
                 System.out.println(response);
                 try {
+                    String respuesta = response.toString();
+                    if( !respuesta.equals("0 results")) {
+                        JSONArray jsonArray = new JSONArray(response);
 
-                    JSONArray jsonArray = new JSONArray(response);
 
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonResponse = jsonArray.getJSONObject(i);
 
-                    for (int i=0; i< jsonArray.length(); i++) {
-                        JSONObject jsonResponse = jsonArray.getJSONObject(i);
+                            int idEncargo = jsonResponse.getInt("idEncargo");
+                            String fechaActual = jsonResponse.getString("fecha");
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            Date newDate = format.parse(fechaActual);
 
-                        int idEncargo = jsonResponse.getInt("idEncargo");
-                        String fechaActual = jsonResponse.getString("fecha");
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                        Date newDate = format.parse(fechaActual);
+                            format = new SimpleDateFormat("dd/MM/yyyy");
+                            String date = format.format(newDate);
 
-                        format = new SimpleDateFormat("dd/MM/yyyy");
-                        String date = format.format(newDate);
-
-                        String nombre = jsonResponse.getString("nombreCliente")+" "+jsonResponse.getString("primerApellido")+" "+jsonResponse.getString("segundoApellido");
-                        String telefono = jsonResponse.getString("telefono");
-                        ArrayList<LineaEncargo> listaProductosEncargados = new ArrayList<>();
-                        JSONArray productos = jsonResponse.getJSONArray("productos");
-                        for (int j =  0 ; j<productos.length(); j++){
-                            JSONObject  producto = productos.getJSONObject(j);
-                            int cantidad = producto.getInt("cantidad");
-                            String nombreProducto = producto.getString("nombreProducto");
-                            LineaEncargo lineaVenta = new LineaEncargo(cantidad, nombreProducto);
-                            listaProductosEncargados.add(lineaVenta);
+                            String nombre = jsonResponse.getString("nombreCliente") + " " + jsonResponse.getString("primerApellido") + " " + jsonResponse.getString("segundoApellido");
+                            String telefono = jsonResponse.getString("telefono");
+                            ArrayList<LineaEncargo> listaProductosEncargados = new ArrayList<>();
+                            JSONArray productos = jsonResponse.getJSONArray("productos");
+                            for (int j = 0; j < productos.length(); j++) {
+                                JSONObject producto = productos.getJSONObject(j);
+                                int cantidad = producto.getInt("cantidad");
+                                String nombreProducto = producto.getString("nombreProducto");
+                                LineaEncargo lineaVenta = new LineaEncargo(cantidad, nombreProducto);
+                                listaProductosEncargados.add(lineaVenta);
+                            }
+                            Encargo producto = new Encargo(idEncargo, date, nombre, listaProductosEncargados, telefono);
+                            listaEncargos.add(producto);
+                            Collections.sort(listaEncargos);
                         }
-                        Encargo producto = new Encargo(idEncargo, date, nombre,listaProductosEncargados,telefono);
-                        listaEncargos.add(producto);
-                        Collections.sort(listaEncargos);
                     }
                     crearArrayEncabezado();
                 } catch (JSONException e) {
