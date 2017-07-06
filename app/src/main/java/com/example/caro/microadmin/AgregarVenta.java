@@ -228,6 +228,10 @@ public class AgregarVenta extends AppCompatActivity {
                             if (agregado) {
 
                                 intent.putExtra("nuevaVenta",true);
+                                tvTotal.setText("");
+                                agregar.clear();
+                                productosAgregados.clear();
+                                adapter.notifyDataSetChanged();
                                 mostrarMensaje("Se ha guardado correctamente");
 
                             } else {

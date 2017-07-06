@@ -218,6 +218,11 @@ public class AgregarEncargo extends AppCompatActivity{
 
                     if (agregado) {
                         intent.putExtra("nuevoEncargo", true);
+                        autoCompletarClientes.setText("");
+                        tfFecha.setText("");
+                        listaHashProductos.clear();
+                        productosAgregados.clear();
+                        adapter.notifyDataSetChanged();
                         mostrarMensaje("Se ha guardado correctamente");
 
                     } else {
